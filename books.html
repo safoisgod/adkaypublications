@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Catalog | PageCraft Publishing</title>
+    <link rel="stylesheet" href="asset/asset/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+       
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Page<span>Craft</span></a>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="books.html" class="active">Our Books</a></li>
+                        <li><a href="blog.html">Blogs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Books Hero -->
+    <section class="books-hero">
+        <div class="container">
+            <div class="books-hero-content">
+                <h1>Discover Our Collection</h1>
+                <p>Explore our carefully curated selection of literary works that captivate, inspire, and transport readers to new worlds</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Catalog -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Book Catalog</h2>
+                <p>Browse our collection of captivating titles</p>
+            </div>
+            
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search by title, author, or keyword...">
+                    <button class="btn" id="search-btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+                <div class="results-info" id="results-info">Showing all 12 titles</div>
+            </div>
+            
+            <div class="catalog-container">
+                <!-- Filters Panel -->
+                <div class="filters-panel">
+                    <div class="filters-header">
+                        <h3>Filter Books</h3>
+                        <button class="reset-btn" id="reset-btn">Reset All</button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4><i class="fas fa-bookmark"></i> Genre</h4>
+                        <ul class="filter-options" id="genre-filter">
+                            <li>
+                                <input type="checkbox" id="fiction" value="Fiction">
+                                <label for="fiction">Fiction</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="nonfiction" value="Non-Fiction">
+                                <label for="nonfiction">Non-Fiction</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="mystery" value="Mystery">
+                                <label for="mystery">Mystery & Thriller</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="scifi" value="Sci-Fi">
+                                <label for="scifi">Science Fiction</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="fantasy" value="Fantasy">
+                                <label for="fantasy">Fantasy</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="romance" value="Romance">
+                                <label for="romance">Romance</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="historical" value="Historical">
+                                <label for="historical">Historical Fiction</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4><i class="fas fa-tags"></i> Format</h4>
+                        <ul class="filter-options" id="format-filter">
+                            <li>
+                                <input type="checkbox" id="hardcover" value="Hardcover" checked>
+                                <label for="hardcover">Hardcover</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="paperback" value="Paperback" checked>
+                                <label for="paperback">Paperback</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="ebook" value="eBook">
+                                <label for="ebook">eBook</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="audiobook" value="Audiobook">
+                                <label for="audiobook">Audiobook</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4><i class="fas fa-dollar-sign"></i> Price Range</h4>
+                        <input type="range" min="0" max="50" value="30" class="price-range" id="price-range">
+                        <div class="price-values">
+                            <span>$0</span>
+                            <span>$50</span>
+                        </div>
+                        <div class="selected-price" id="selected-price">Max Price: $30</div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4><i class="fas fa-star"></i> Rating</h4>
+                        <ul class="filter-options" id="rating-filter">
+                            <li>
+                                <input type="checkbox" id="rating5" value="4.5">
+                                <label for="rating5">★★★★★ (4.5+)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="rating4" value="4.0">
+                                <label for="rating4">★★★★☆ (4.0+)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="rating3" value="3.0" checked>
+                                <label for="rating3">★★★☆☆ (3.0+)</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4><i class="fas fa-calendar"></i> Publication Year</h4>
+                        <ul class="filter-options" id="year-filter">
+                            <li>
+                                <input type="checkbox" id="new" value="2023">
+                                <label for="new">New Releases (2023)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="recent" value="2020-2022" checked>
+                                <label for="recent">Recent (2020-2022)</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="backlist" value="pre-2020">
+                                <label for="backlist">Backlist (Pre-2020)</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Books Grid -->
+                <div class="books-grid-container">
+                    <div class="books-grid" id="books-grid">
+                        <!-- Books will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination">
+                        <!-- Pagination will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- New Releases -->
+    <section class="new-releases">
+        <div class="container">
+            <div class="section-title">
+                <h2>New Releases</h2>
+                <p>Discover our latest publications</p>
+            </div>
+            
+            <div class="release-card">
+                <div class="release-cover">
+                    <img src="https://via.placeholder.com/150x220/2c3e50/ffffff?text=Horizon" alt="New Release" style="width: 80%; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+                </div>
+                <div class="release-info">
+                    <span class="release-badge">Just Released</span>
+                    <h2 class="release-title">Beyond the Horizon</h2>
+                    <span class="release-author">Elena Chen</span>
+                    <p class="release-description">A breathtaking journey of self-discovery set against the backdrop of the Himalayas. This powerful novel explores themes of love, loss, and the search for meaning in an ever-changing world.</p>
+                    <div class="book-actions">
+                        <a href="book-details.html?id=${book.id}" class="btn">Details</a>
+                        <a href="#" class="btn btn-outline">Preview</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About PageCraft</h4>
+                    <p>We are an independent publishing house dedicated to discovering exceptional voices and creating beautifully crafted books that stand the test of time.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="books.html">Book Catalog</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Categories</h4>
+                    <p>Fiction</p>
+                    <p>Non-Fiction</p>
+                    <p>Literary Fiction</p>
+                    <p>Mystery & Thriller</p>
+                    <p>Science Fiction & Fantasy</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Literary Lane, Bookville</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> books@pagecraft.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 9am-6pm</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 PageCraft Publishing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Book data
+        const booksData = [
+            { 
+                id: 1, 
+                title: "Whispers of the Ancient Forest", 
+                author: "Elena Rodriguez", 
+                genre: "Fiction", 
+                format: ["Hardcover", "eBook"], 
+                price: 24.99, 
+                rating: 4.2, 
+                year: 2023, 
+                badge: "Bestseller",
+                coverColor: "#2c3e50"
+            },
+            { 
+                id: 2, 
+                title: "The Midnight Archive", 
+                author: "Thomas Bennett", 
+                genre: "Mystery", 
+                format: ["Hardcover", "Paperback", "eBook"], 
+                price: 22.95, 
+                rating: 4.7, 
+                year: 2022, 
+                badge: "New",
+                coverColor: "#3498db"
+            },
+            { 
+                id: 3, 
+                title: "Beneath Azure Skies", 
+                author: "Olivia Chen", 
+                genre: "Romance", 
+                format: ["Paperback", "eBook", "Audiobook"], 
+                price: 19.99, 
+                rating: 4.1, 
+                year: 2021, 
+                badge: "",
+                coverColor: "#e74c3c"
+            },
+            { 
+                id: 4, 
+                title: "Echoes of Silence", 
+                author: "Michael Donovan", 
+                genre: "Sci-Fi", 
+                format: ["Hardcover", "eBook"], 
+                price: 21.50, 
+                rating: 4.3, 
+                year: 2020, 
+                badge: "",
+                coverColor: "#2c3e50"
+            },
+            { 
+                id: 5, 
+                title: "The Silent River", 
+                author: "Sarah Johnson", 
+                genre: "Fiction", 
+                format: ["Hardcover", "Paperback", "Audiobook"], 
+                price: 26.99, 
+                rating: 4.8, 
+                year: 2019, 
+                badge: "Award",
+                coverColor: "#3498db"
+            },
+            { 
+                id: 6, 
+                title: "Urban Legends", 
+                author: "Emma Johnson", 
+                genre: "Thriller", 
+                format: ["Paperback", "eBook"], 
+                price: 23.75, 
+                rating: 3.9, 
+                year: 2022, 
+                badge: "",
+                coverColor: "#e74c3c"
+            },
+            { 
+                id: 7, 
+                title: "Quantum Echoes", 
+                author: "Dr. Alan Richter", 
+                genre: "Sci-Fi", 
+                format: ["Hardcover"], 
+                price: 25.50, 
+                rating: 3.5, 
+                year: 2021, 
+                badge: "",
+                coverColor: "#2c3e50"
+            },
+            { 
+                id: 8, 
+                title: "Crimson Tides", 
+                author: "Isabella Russo", 
+                genre: "Historical", 
+                format: ["Hardcover", "eBook", "Audiobook"], 
+                price: 22.99, 
+                rating: 4.4, 
+                year: 2023, 
+                badge: "New",
+                coverColor: "#3498db"
+            },
+            { 
+                id: 9, 
+                title: "Desert Dreams", 
+                author: "Fatima Al-Mansoor", 
+                genre: "Romance", 
+                format: ["Paperback", "eBook"], 
+                price: 18.99, 
+                rating: 4.0, 
+                year: 2022, 
+                badge: "",
+                coverColor: "#e74c3c"
+            },
+            { 
+                id: 10, 
+                title: "Code of Honor", 
+                author: "Daniel Kim", 
+                genre: "Thriller", 
+                format: ["Hardcover", "Paperback"], 
+                price: 24.50, 
+                rating: 4.6, 
+                year: 2021, 
+                badge: "",
+                coverColor: "#2c3e50"
+            },
+            { 
+                id: 11, 
+                title: "Brushstrokes of Life", 
+                author: "Olivia Kensington", 
+                genre: "Non-Fiction", 
+                format: ["Hardcover"], 
+                price: 27.95, 
+                rating: 4.9, 
+                year: 2020, 
+                badge: "",
+                coverColor: "#3498db"
+            },
+            { 
+                id: 12, 
+                title: "The Art of Mindfulness", 
+                author: "Claire Dubois", 
+                genre: "Non-Fiction", 
+                format: ["Paperback", "eBook", "Audiobook"], 
+                price: 19.50, 
+                rating: 4.7, 
+                year: 2019, 
+                badge: "",
+                coverColor: "#e74c3c"
+            }
+        ];
+
+        // DOM elements
+        const booksGrid = document.getElementById('books-grid');
+        const resultsInfo = document.getElementById('results-info');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const priceRange = document.getElementById('price-range');
+        const selectedPrice = document.getElementById('selected-price');
+        const pagination = document.getElementById('pagination');
+
+        // Filter elements
+        const genreFilter = document.getElementById('genre-filter');
+        const formatFilter = document.getElementById('format-filter');
+        const ratingFilter = document.getElementById('rating-filter');
+        const yearFilter = document.getElementById('year-filter');
+
+        // Configuration
+        const booksPerPage = 8;
+        let currentPage = 1;
+        let filteredBooks = [...booksData];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                if(link.href === window.location.href) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Render books and pagination
+            renderBooks(getPaginatedBooks());
+            renderPagination();
+
+            // Event listeners
+            searchBtn.addEventListener('click', filterBooks);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') filterBooks();
+            });
+            resetBtn.addEventListener('click', resetFilters);
+            priceRange.addEventListener('input', updatePriceDisplay);
+            
+            // Filter change listeners
+            genreFilter.addEventListener('change', filterBooks);
+            formatFilter.addEventListener('change', filterBooks);
+            ratingFilter.addEventListener('change', filterBooks);
+            yearFilter.addEventListener('change', filterBooks);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        if(mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Update price display
+        function updatePriceDisplay() {
+            selectedPrice.textContent = `Max Price: $${priceRange.value}`;
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            // Uncheck all checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Reset price range
+            priceRange.value = 30;
+            updatePriceDisplay();
+            
+            // Re-check default boxes
+            document.getElementById('hardcover').checked = true;
+            document.getElementById('paperback').checked = true;
+            document.getElementById('rating3').checked = true;
+            document.getElementById('recent').checked = true;
+            
+            // Reset search input
+            searchInput.value = '';
+            
+            // Reset books display
+            currentPage = 1;
+            filteredBooks = [...booksData];
+            renderBooks(getPaginatedBooks());
+            renderPagination();
+            resultsInfo.textContent = `Showing all ${booksData.length} titles`;
+        }
+
+        // Filter books based on criteria
+        function filterBooks() {
+            currentPage = 1;
+            const searchTerm = searchInput.value.toLowerCase();
+            const maxPrice = parseFloat(priceRange.value);
+            
+            // Get selected genres
+            const selectedGenres = Array.from(genreFilter.querySelectorAll('input:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Get selected formats
+            const selectedFormats = Array.from(formatFilter.querySelectorAll('input:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Get selected ratings
+            const selectedRatings = Array.from(ratingFilter.querySelectorAll('input:checked'))
+                .map(checkbox => parseFloat(checkbox.value));
+            
+            // Get selected years
+            const selectedYears = Array.from(yearFilter.querySelectorAll('input:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Filter books
+            filteredBooks = booksData.filter(book => {
+                // Search term filter
+                if (searchTerm && 
+                    !book.title.toLowerCase().includes(searchTerm) && 
+                    !book.author.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                // Price filter
+                if (book.price > maxPrice) {
+                    return false;
+                }
+                
+                // Genre filter
+                if (selectedGenres.length > 0 && !selectedGenres.includes(book.genre)) {
+                    return false;
+                }
+                
+                // Format filter
+                if (selectedFormats.length > 0) {
+                    const hasFormat = selectedFormats.some(format => book.format.includes(format));
+                    if (!hasFormat) return false;
+                }
+                
+                // Rating filter
+                if (selectedRatings.length > 0) {
+                    const minRating = Math.min(...selectedRatings);
+                    if (book.rating < minRating) return false;
+                }
+                
+                // Year filter
+                if (selectedYears.length > 0) {
+                    if (selectedYears.includes('2023') && book.year !== 2023) return false;
+                    if (selectedYears.includes('2020-2022') && (book.year < 2020 || book.year > 2022)) return false;
+                    if (selectedYears.includes('pre-2020') && book.year >= 2020) return false;
+                }
+                
+                return true;
+            });
+            
+            // Update results info
+            const resultsCount = filteredBooks.length;
+            resultsInfo.textContent = resultsCount === 0 ? 
+                'No books match your criteria' : 
+                `Showing ${resultsCount} book${resultsCount !== 1 ? 's' : ''}`;
+            
+            // Render books and pagination
+            renderBooks(getPaginatedBooks());
+            renderPagination();
+        }
+
+        // Get paginated books
+        function getPaginatedBooks() {
+            const startIndex = (currentPage - 1) * booksPerPage;
+            const endIndex = startIndex + booksPerPage;
+            return filteredBooks.slice(startIndex, endIndex);
+        }
+
+        // Render books to the grid
+        function renderBooks(books) {
+            booksGrid.innerHTML = '';
+            
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                
+                // Create rating stars
+                const ratingStars = '★'.repeat(Math.floor(book.rating)) + 
+                                  '☆'.repeat(5 - Math.floor(book.rating));
+                
+                bookCard.innerHTML = `
+                    ${book.badge ? `<span class="our-books-book-badge">${book.badge}</span>` : ''}
+                    <div class="our-books-book-cover">
+                        <div style="background-color: ${book.coverColor}; width: 150px; height: 220px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; text-align: center; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                            ${book.title.split(' ').slice(0, 3).join(' ')}
+                        </div>
+                    </div>
+                    <div class="our-books-book-info">
+                        <h3 class="our-books-book-title">${book.title}</h3>
+                        <span class="our-books-book-author">${book.author}</span>
+                        <div class="our-books-book-meta">
+                            <span>${book.genre}</span>
+                            <span class="our-books-book-rating">${ratingStars}</span>
+                        </div>
+                        <div class="our-books-book-price">$${book.price.toFixed(2)}</div>
+                        <!-- In the book card template within renderBooks function -->
+                        <div class="our-books-book-actions">
+                            <a href="book-details.html?id=${book.id}" class="btn">Details</a>
+                            <a href="#" class="btn btn-outline">Preview</a>
+                        </div>
+                    </div>
+                `;
+                
+                booksGrid.appendChild(bookCard);
+            });
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const pageCount = Math.ceil(filteredBooks.length / booksPerPage);
+            pagination.innerHTML = '';
+            
+            if (pageCount <= 1) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('div');
+            prevBtn.className = 'page-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderBooks(getPaginatedBooks());
+                    renderPagination();
+                }
+            });
+            pagination.appendChild(prevBtn);
+            
+            // Page buttons
+            for (let i = 1; i <= pageCount; i++) {
+                const pageBtn = document.createElement('div');
+                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderBooks(getPaginatedBooks());
+                    renderPagination();
+                });
+                pagination.appendChild(pageBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('div');
+            nextBtn.className = 'page-btn';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    renderBooks(getPaginatedBooks());
+                    renderPagination();
+                }
+            });
+            pagination.appendChild(nextBtn);
+        }
+    </script>
+</body>
+</html>

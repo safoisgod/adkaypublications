@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details - Inkwell Publishing</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Ink<span>well</span></a>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="books.html" >Our Books</a></li>
+                        <li><a href="blog.html" class="active">Blogs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1 id="blogTitle">Loading Blog Post...</h1>
+            <div class="blog-meta" id="blogMeta" style="max-width: 800px; margin: 0 auto; display: none;">
+                <div>
+                    <span><i class="far fa-user"></i> By <span id="blogAuthor"></span></span>
+                    <span><i class="far fa-calendar"></i> <span id="blogDate"></span></span>
+                </div>
+                <span><i class="far fa-clock"></i> <span id="blogReadTime"></span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="container">
+        <div id="blogContentContainer">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading blog content...</p>
+            </div>
+        </div>
+        
+        <!-- Related Posts -->
+        <div class="related-posts" id="relatedPosts" style="display: none;">
+            <h3>Related Posts</h3>
+            <div class="related-grid" id="relatedGrid"></div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="section-title">
+                <h2>Never Miss a Post</h2>
+                <p>Subscribe to our newsletter for the latest blog updates and literary insights</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About Inkwell</h4>
+                    <p>We are an independent publishing house dedicated to discovering exceptional voices and creating beautifully crafted books that stand the test of time.</p>
+                    <div class="social-links-footer">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="books.html">Our Books</a></p>
+                    <p><a href="blog.html">Blog</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Categories</h4>
+                    <p>Fiction</p>
+                    <p>Non-Fiction</p>
+                    <p>Literary Fiction</p>
+                    <p>Mystery & Thriller</p>
+                    <p>Science Fiction & Fantasy</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Literary Lane, Bookville</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@inkwellpublishing.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Inkwell Publishing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog data (3 blogs)
+        const blogData = [
+            {
+                id: 1,
+                title: "The Art of Storytelling: Techniques for Captivating Readers",
+                author: "Sarah Johnson",
+                date: "June 15, 2023",
+                readTime: "6 min read",
+                tag: "Writing Tips",
+                imageUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                content: `
+                    <div class="blog-details-blog-content">
+                        <div class="blog-details-blog-tag">Writing Tips</div>
+                        <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"></div>
+                        
+                        <div class="blog-details-blog-text">
+                            <p>Mastering the art of storytelling is essential for any writer who wants to captivate their readers from the first page to the last. Great stories transport readers to new worlds, introduce them to unforgettable characters, and leave a lasting impact long after the final page is turned.</p>
+                            
+                            <h2>The Power of Narrative Structure</h2>
+                            
+                            <p>Every compelling story follows a narrative structure that creates tension, builds anticipation, and delivers satisfying resolutions. The classic three-act structure—setup, confrontation, and resolution—provides a solid foundation for most stories:</p>
+                            
+                            <blockquote>
+                                "The most powerful stories are those that resonate with universal human experiences while offering fresh perspectives on the world around us."
+                            </blockquote>
+                            
+                            <p>In the first act, you establish your characters, setting, and the central conflict. This is where you hook your readers and make them care about what happens next. The second act develops the conflict through rising action and complications, testing your characters and pushing them to their limits. The third act brings the story to its climax and resolution, providing answers to the central questions raised at the beginning.</p>
+                            
+                            <h2>Creating Memorable Characters</h2>
+                            
+                            <p>Characters are the heart of any great story. Readers connect with characters who feel real, who have flaws, dreams, and motivations that drive their actions. To create compelling characters:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;">Give them clear motivations that drive their decisions</li>
+                                <li style="margin-bottom: 0.8rem;">Develop both strengths and flaws that create internal conflict</li>
+                                <li style="margin-bottom: 0.8rem;">Create backstories that influence their present behavior</li>
+                                <li style="margin-bottom: 0.8rem;">Show their growth and transformation throughout the story</li>
+                            </ul>
+                            
+                            <p>When characters face challenges that force them to grow and change, readers become emotionally invested in their journey.</p>
+                            
+                            <h2>The Importance of Setting</h2>
+                            
+                            <p>A well-developed setting creates atmosphere and grounds your story in a specific time and place. Whether you're creating a fantastical world or describing a familiar city, your setting should feel alive and contribute to the story's mood and themes.</p>
+                            
+                            <p>Use sensory details to bring your setting to life—describe not just what the place looks like, but how it sounds, smells, and feels. The setting can also reflect your characters' emotions and mirror their internal journeys, adding depth and symbolism to your narrative.</p>
+                            
+                            <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); height: 300px;"></div>
+                            
+                            <h2>Pacing Your Story</h2>
+                            
+                            <p>Effective pacing keeps readers engaged throughout your story. Vary the rhythm of your narrative by balancing action-packed scenes with quieter moments of reflection and character development. Fast-paced scenes create excitement and tension, while slower scenes allow readers to process events and connect with characters on a deeper level.</p>
+                            
+                            <p>Consider the length of your sentences and paragraphs—shorter, punchier sentences work well for action scenes, while longer, more complex sentences can create a more contemplative mood during introspective moments.</p>
+                        </div>
+                        
+                        <div class="blog-details-author-card">
+                            <div class="blog-details-author-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="blog-details-author-info">
+                                <h4>Sarah Johnson</h4>
+                                <div class="blog-details-author-title">Senior Editor at Inkwell Publishing</div>
+                                <p>Sarah has over 15 years of experience in the publishing industry, working with both debut and established authors to help them refine their craft and tell compelling stories that resonate with readers.</p>
+                                <div class="blog-details-social-links">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-details-comments-section">
+                        <h3>Comments (3)</h3>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Michael Thompson</h4>
+                                <div class="comment-date">June 17, 2023 at 2:34 PM</div>
+                                <p>This article perfectly articulates what I've been struggling with in my writing. The section on character development especially resonated with me. I'll be implementing these techniques in my current manuscript!</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Elena Rodriguez</h4>
+                                <div class="comment-date">June 16, 2023 at 9:15 AM</div>
+                                <p>As a fantasy author, I particularly appreciated your insights on world-building and setting. Creating immersive worlds is such an important part of the genre, and your tips on using sensory details are spot on.</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Thomas Bennett</h4>
+                                <div class="comment-date">June 15, 2023 at 6:45 PM</div>
+                                <p>Great article! I've shared this with my writing group. The pacing section was particularly helpful - it's something we all struggle with at times. Looking forward to reading more of your insights!</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-form">
+                        <h3 class="form-title">Leave a Comment</h3>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea id="comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Post Comment</button>
+                        </form>
+                    </div>
+                `,
+                authorImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+                authorTitle: "Senior Editor at Inkwell Publishing",
+                authorBio: "Sarah has over 15 years of experience in the publishing industry, working with both debut and established authors to help them refine their craft and tell compelling stories that resonate with readers.",
+                comments: [
+                    { 
+                        name: "Michael Thompson", 
+                        date: "June 17, 2023 at 2:34 PM", 
+                        content: "This article perfectly articulates what I've been struggling with in my writing. The section on character development especially resonated with me. I'll be implementing these techniques in my current manuscript!",
+                        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Elena Rodriguez", 
+                        date: "June 16, 2023 at 9:15 AM", 
+                        content: "As a fantasy author, I particularly appreciated your insights on world-building and setting. Creating immersive worlds is such an important part of the genre, and your tips on using sensory details are spot on.",
+                        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Thomas Bennett", 
+                        date: "June 15, 2023 at 6:45 PM", 
+                        content: "Great article! I've shared this with my writing group. The pacing section was particularly helpful - it's something we all struggle with at times. Looking forward to reading more of your insights!",
+                        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Creating Memorable Characters in Fiction",
+                author: "James Wilson",
+                date: "May 28, 2023",
+                readTime: "8 min read",
+                tag: "Character Development",
+                imageUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                content: `
+                    <div class="blog-details-blog-content">
+                        <div class="blog-details-blog-tag">Character Development</div>
+                        <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"></div>
+                        
+                        <div class="blog-details-blog-text">
+                            <p>Characters are the heart and soul of any compelling story. They are the vehicles through which readers experience your narrative, making character development one of the most crucial aspects of storytelling.</p>
+                            
+                            <h2>Understanding Character Archetypes</h2>
+                            
+                            <p>While each character should be unique, understanding archetypes can help you create balanced and relatable personalities. Here are some common archetypes:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>The Hero:</strong> Protagonist who overcomes obstacles to achieve goals</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>The Mentor:</strong> Wise guide who provides knowledge and support</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>The Shadow:</strong> Antagonist who represents the hero's fears</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>The Ally:</strong> Companion who supports the hero's journey</li>
+                            </ul>
+                            
+                            <blockquote>
+                                "The best characters feel like real people—complex, contradictory, and constantly evolving throughout the story."
+                            </blockquote>
+                            
+                            <h2>Character Motivation and Goals</h2>
+                            
+                            <p>What drives your character? Clear motivations create believable actions and decisions. Consider these layers of motivation:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>External goals:</strong> Tangible objectives the character wants to achieve</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Internal needs:</strong> Emotional fulfillment or personal growth</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Secret desires:</strong> Hidden motivations that conflict with stated goals</li>
+                            </ul>
+                            
+                            <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); height: 300px;"></div>
+                            
+                            <h2>Character Flaws and Growth</h2>
+                            
+                            <p>Perfect characters are forgettable. Flaws create opportunities for growth and reader connection. Consider these types of flaws:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Personality flaws:</strong> Pride, impulsiveness, or stubbornness</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Moral weaknesses:</strong> Dishonesty, selfishness, or cowardice</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Physical limitations:</strong> Health issues, disabilities, or appearance insecurities</li>
+                            </ul>
+                            
+                            <p>The most memorable characters undergo significant transformation throughout the story, emerging changed by their experiences. This character arc is what makes readers emotionally invested in their journey.</p>
+                            
+                            <h2>Dialogue and Voice</h2>
+                            
+                            <p>Distinctive dialogue brings characters to life. Consider these elements:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Speech patterns:</strong> Vocabulary, sentence structure, and rhythm</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Catchphrases:</strong> Unique expressions that reveal personality</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Subtext:</strong> What characters aren't saying directly</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Emotional tells:</strong> How emotions affect their speech</li>
+                            </ul>
+                            
+                            <p>Remember that great dialogue reveals character while advancing the plot. Every conversation should serve multiple purposes.</p>
+                        </div>
+                        
+                        <div class="blog-details-author-card">
+                            <div class="blog-details-author-image" style="background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="blog-details-author-info">
+                                <h4>James Wilson</h4>
+                                <div class="blog-details-author-title">Character Development Specialist</div>
+                                <p>James has worked with authors for over a decade, helping them create unforgettable characters that leap off the page. His expertise in psychology and narrative structure brings depth to character creation.</p>
+                                <div class="blog-details-social-links">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-medium"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-details-comments-section">
+                        <h3>Comments (2)</h3>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Alexandra Parker</h4>
+                                <div class="comment-date">June 1, 2023 at 10:22 AM</div>
+                                <p>This is exactly what I needed for my current project! The section on character flaws gave me new insights into developing my protagonist. I especially appreciate the distinction between personality flaws and moral weaknesses.</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Marcus Johnson</h4>
+                                <div class="comment-date">May 30, 2023 at 4:15 PM</div>
+                                <p>I've been struggling with making my supporting characters more three-dimensional. The archetype framework you presented here is incredibly helpful for establishing a balanced cast. Thank you!</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-form">
+                        <h3 class="form-title">Leave a Comment</h3>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea id="comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Post Comment</button>
+                        </form>
+                    </div>
+                `,
+                authorImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+                authorTitle: "Character Development Specialist",
+                authorBio: "James has worked with authors for over a decade, helping them create unforgettable characters that leap off the page.",
+                comments: [
+                    { 
+                        name: "Alexandra Parker", 
+                        date: "June 1, 2023 at 10:22 AM", 
+                        content: "This is exactly what I needed for my current project! The section on character flaws gave me new insights into developing my protagonist. I especially appreciate the distinction between personality flaws and moral weaknesses.",
+                        image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Marcus Johnson", 
+                        date: "May 30, 2023 at 4:15 PM", 
+                        content: "I've been struggling with making my supporting characters more three-dimensional. The archetype framework you presented here is incredibly helpful for establishing a balanced cast. Thank you!",
+                        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "World-Building in Fantasy Novels",
+                author: "Emily Chen",
+                date: "April 12, 2023",
+                readTime: "10 min read",
+                tag: "Fantasy",
+                imageUrl: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                content: `
+                    <div class="blog-details-blog-content">
+                        <div class="blog-details-blog-tag">Fantasy</div>
+                        <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"></div>
+                        
+                        <div class="blog-details-blog-text">
+                            <p>Creating immersive fantasy worlds requires careful attention to detail and internal consistency. Your world should feel lived-in and authentic, with its own rules, history, and cultures that shape your characters' lives.</p>
+                            
+                            <h2>Establishing Rules and Systems</h2>
+                            
+                            <p>Every fantasy world needs consistent rules that govern its reality. Consider these elements:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Magic systems:</strong> Define limitations, costs, and sources of magic</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Technology level:</strong> Determine what tools and inventions exist</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Social structures:</strong> Create hierarchies, class systems, and power dynamics</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Natural laws:</strong> Establish what's physically possible in your world</li>
+                            </ul>
+                            
+                            <blockquote>
+                                "The most believable fantasy worlds are those with clear limitations—where magic has consequences and power comes with a price."
+                            </blockquote>
+                            
+                            <h2>Developing Cultures and Societies</h2>
+                            
+                            <p>Rich cultures bring depth to your world. Consider developing these aspects:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Customs and traditions:</strong> Rituals, ceremonies, and social norms</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Religion and beliefs:</strong> Creation myths, deities, and spiritual practices</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Economy and trade:</strong> Resources, currency, and commerce</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Language and communication:</strong> Unique phrases, writing systems, or gestures</li>
+                            </ul>
+                            
+                            <div class="blog-details-blog-image" style="background-image: url('https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); height: 300px;"></div>
+                            
+                            <h2>Geography and Environment</h2>
+                            
+                            <p>The physical world shapes societies and stories. Develop these geographical elements:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Maps:</strong> Create rough sketches of continents, countries, and cities</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Climate zones:</strong> Determine weather patterns and seasonal changes</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Natural resources:</strong> Identify what resources are abundant or scarce</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Flora and fauna:</strong> Design unique plants and animals</li>
+                            </ul>
+                            
+                            <p>Remember that geography influences culture—mountain dwellers will develop differently than desert nomads or island inhabitants.</p>
+                            
+                            <h2>History and Lore</h2>
+                            
+                            <p>A world's past shapes its present. Develop these historical elements:</p>
+                            
+                            <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.8rem;"><strong>Major events:</strong> Wars, discoveries, natural disasters</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Historical figures:</strong> Heroes, villains, and influential leaders</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Artifacts and relics:</strong> Objects of power or cultural significance</li>
+                                <li style="margin-bottom: 0.8rem;"><strong>Myths and legends:</strong> Stories passed down through generations</li>
+                            </ul>
+                            
+                            <p>You don't need to include all this history in your story, but knowing it will make your world feel more authentic and lived-in.</p>
+                        </div>
+                        
+                        <div class="blog-details-author-card">
+                            <div class="blog-details-author-image" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="blog-details-author-info">
+                                <h4>Emily Chen</h4>
+                                <div class="blog-details-author-title">Fantasy World-Building Expert</div>
+                                <p>Emily specializes in creating immersive fantasy worlds for novels and games. With a background in anthropology and history, she brings academic rigor to the art of world-building.</p>
+                                <div class="blog-details-social-links">
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-goodreads"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-details-comments-section">
+                        <h3>Comments (4)</h3>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>David Rodriguez</h4>
+                                <div class="comment-date">April 20, 2023 at 3:45 PM</div>
+                                <p>This comprehensive guide to world-building is exactly what I needed for my epic fantasy series. The section on developing cultures has given me so many new ideas for my nomadic desert tribes. Thank you!</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Sophia Miller</h4>
+                                <div class="comment-date">April 18, 2023 at 11:20 AM</div>
+                                <p>I especially appreciate your emphasis on consistency in magic systems. Too many fantasy stories have magic that conveniently solves problems without consequences. Your framework helps create meaningful limitations.</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Thomas Kim</h4>
+                                <div class="comment-date">April 15, 2023 at 9:30 PM</div>
+                                <p>The historical depth you recommend has transformed my world from a generic medieval setting to something with real texture and conflict. The idea of creating artifacts with cultural significance is brilliant!</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment">
+                            <div class="comment-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80')"></div>
+                            <div class="comment-content">
+                                <h4>Olivia Parker</h4>
+                                <div class="comment-date">April 14, 2023 at 2:15 PM</div>
+                                <p>As a fantasy cartographer, I love your approach to geography influencing culture. This perspective helps me create more meaningful maps that aren't just pretty but actually inform the story.</p>
+                                <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-form">
+                        <h3 class="form-title">Leave a Comment</h3>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment</label>
+                                <textarea id="comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Post Comment</button>
+                        </form>
+                    </div>
+                `,
+                authorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+                authorTitle: "Fantasy World-Building Expert",
+                authorBio: "Emily specializes in creating immersive fantasy worlds for novels and games. With a background in anthropology and history, she brings academic rigor to the art of world-building.",
+                comments: [
+                    { 
+                        name: "David Rodriguez", 
+                        date: "April 20, 2023 at 3:45 PM", 
+                        content: "This comprehensive guide to world-building is exactly what I needed for my epic fantasy series. The section on developing cultures has given me so many new ideas for my nomadic desert tribes. Thank you!",
+                        image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Sophia Miller", 
+                        date: "April 18, 2023 at 11:20 AM", 
+                        content: "I especially appreciate your emphasis on consistency in magic systems. Too many fantasy stories have magic that conveniently solves problems without consequences. Your framework helps create meaningful limitations.",
+                        image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Thomas Kim", 
+                        date: "April 15, 2023 at 9:30 PM", 
+                        content: "The historical depth you recommend has transformed my world from a generic medieval setting to something with real texture and conflict. The idea of creating artifacts with cultural significance is brilliant!",
+                        image: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    },
+                    { 
+                        name: "Olivia Parker", 
+                        date: "April 14, 2023 at 2:15 PM", 
+                        content: "As a fantasy cartographer, I love your approach to geography influencing culture. This perspective helps me create more meaningful maps that aren't just pretty but actually inform the story.",
+                        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                    }
+                ]
+            }
+        ];
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Function to get URL parameter
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Function to display blog content
+        function displayBlogContent(blog) {
+            // Update hero section
+            document.getElementById('blogTitle').textContent = blog.title;
+            document.getElementById('blogAuthor').textContent = blog.author;
+            document.getElementById('blogDate').textContent = blog.date;
+            document.getElementById('blogReadTime').textContent = blog.readTime;
+            document.querySelector('.blog-meta').style.display = 'flex';
+            
+            // Display blog content
+            const blogContainer = document.getElementById('blogContentContainer');
+            blogContainer.innerHTML = blog.content;
+            
+            // Show related posts
+            displayRelatedPosts(blog.id);
+        }
+
+        // Function to display related posts
+        function displayRelatedPosts(currentId) {
+            // Filter out current post and get 2 random related posts
+            const related = blogData.filter(blog => blog.id !== currentId)
+                                    .sort(() => 0.5 - Math.random())
+                                    .slice(0, 2);
+            
+            if(related.length > 0) {
+                const relatedGrid = document.getElementById('relatedGrid');
+                relatedGrid.innerHTML = '';
+                
+                related.forEach(post => {
+                    relatedGrid.innerHTML += `
+                        <div class="related-post">
+                            <div class="related-post-image" 
+                                 style="background-image: url('${post.imageUrl}')"></div>
+                            <div class="related-post-content">
+                                <div class="related-post-tag">${post.tag}</div>
+                                <h3 class="related-post-title">
+                                    <a href="?id=${post.id}">${post.title}</a>
+                                </h3>
+                                <div class="related-post-meta">
+                                    <span><i class="far fa-user"></i> ${post.author}</span>
+                                    <span><i class="far fa-calendar"></i> ${post.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.getElementById('relatedPosts').style.display = 'block';
+            }
+        }
+
+        // Simulate loading delay
+        setTimeout(() => {
+            const blogId = parseInt(getUrlParam('id') || 1);
+            const currentBlog = blogData.find(blog => blog.id === blogId) || blogData[0];
+            
+            if(currentBlog) {
+                displayBlogContent(currentBlog);
+            } else {
+                document.getElementById('blogContentContainer').innerHTML = `
+                    <div class="blog-details-blog-content">
+                        <h2>Blog Post Not Found</h2>
+                        <p>The requested blog post could not be found.</p>
+                        <a href="blog.html" class="btn">View All Posts</a>
+                    </div>
+                `;
+            }
+        }, 1000);
+        
+        // Comment form submission
+        document.addEventListener('submit', function(e) {
+            if (e.target.closest('.comment-form form')) {
+                e.preventDefault();
+                const form = e.target;
+                const name = form.querySelector('#name').value;
+                const comment = form.querySelector('#comment').value;
+                
+                if(name && comment) {
+                    const commentsSection = document.querySelector('.comments-section');
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment';
+                    newComment.innerHTML = `
+                        <div class="comment-image" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user fa-2x" style="color: #777;"></i>
+                        </div>
+                        <div class="comment-content">
+                            <h4>${name}</h4>
+                            <div class="comment-date">Just now</div>
+                            <p>${comment}</p>
+                            <div class="reply-btn">Reply <i class="fas fa-reply"></i></div>
+                        </div>
+                    `;
+                    
+                    // Insert at top of comments
+                    commentsSection.insertBefore(newComment, commentsSection.children[1]);
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Update comment count
+                    const commentCount = document.querySelector('.comments-section h3');
+                    const currentCount = parseInt(commentCount.textContent.match(/\d+/)[0]);
+                    commentCount.textContent = `Comments (${currentCount + 1})`;
+                }
+            }
+            
+            // Newsletter form submission
+            if (e.target.closest('.newsletter-form')) {
+                e.preventDefault();
+                const form = e.target;
+                const email = form.querySelector('input').value;
+                if(email) {
+                    alert(`Thank you for subscribing with ${email}! You'll receive our latest updates soon.`);
+                    form.reset();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

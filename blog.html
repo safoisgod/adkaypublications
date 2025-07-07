@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inkwell Publishing - Blog</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Ink<span>well</span></a>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="books.html" >Our Books</a></li>
+                        <li><a href="blog.html" class="active">Blogs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Inkwell Insights</h1>
+            <p>Explore the latest news, writing tips, publishing trends, and author interviews in our literary blog</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="container">
+        <div class="blog-container">
+            <div class="blog-posts" id="blogPosts">
+                <!-- Blog posts will be dynamically added here -->
+            </div>
+            
+            <!-- Sidebar with Filters -->
+            <div class="sidebar">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-title">
+                        <span>Filter Posts</span>
+                        <span class="reset-filters" id="resetFilters">Reset Filters</span>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="showAll">Show All Posts</button>
+                    </div>
+                </div>
+                
+                <!-- Categories Filter -->
+                <div class="sidebar-widget">
+                    <h4>Categories</h4>
+                    <ul class="categories-list" id="categoriesList">
+                        <li><a class="filter-category" data-category="all">All Categories <span>12</span></a></li>
+                        <li><a class="filter-category" data-category="writing">Writing Tips <span>4</span></a></li>
+                        <li><a class="filter-category" data-category="design">Design <span>2</span></a></li>
+                        <li><a class="filter-category" data-category="publishing">Publishing <span>5</span></a></li>
+                        <li><a class="filter-category" data-category="marketing">Marketing <span>3</span></a></li>
+                    </ul>
+                </div>
+                
+                <!-- Tags Filter -->
+                <div class="sidebar-widget">
+                    <h4>Tags</h4>
+                    <div class="tags" id="tagsList">
+                        <div class="tag filter-tag" data-tag="all">All Tags</div>
+                        <div class="tag filter-tag" data-tag="fiction">Fiction</div>
+                        <div class="tag filter-tag" data-tag="non-fiction">Non-Fiction</div>
+                        <div class="tag filter-tag" data-tag="marketing">Marketing</div>
+                        <div class="tag filter-tag" data-tag="editing">Editing</div>
+                    </div>
+                </div>
+                
+                <!-- Popular Posts -->
+                <div class="sidebar-widget">
+                    <h4>Popular Posts</h4>
+                    <ul class="popular-posts">
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80');"></div>
+                            <div class="popular-post-content">
+                                <h5>Creating Memorable Characters</h5>
+                                <div class="date">April 22, 2023</div>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background-image: url('https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80');"></div>
+                            <div class="popular-post-content">
+                                <h5>The Future of Print Books</h5>
+                                <div class="date">April 15, 2023</div>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background-image: url('https://images.unsplash.com/photo-1491841573634-28140fc7ced7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80');"></div>
+                            <div class="popular-post-content">
+                                <h5>Building an Author Platform</h5>
+                                <div class="date">April 5, 2023</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="pagination-arrow" id="prevPage">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <ul class="page-numbers" id="pagination">
+                <!-- Pagination links will be dynamically added here -->
+            </ul>
+            <div class="pagination-arrow" id="nextPage">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="section-title">
+                <h2>Never Miss a Post</h2>
+                <p>Subscribe to our newsletter for the latest blog updates and literary insights</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About Inkwell</h4>
+                    <p>We are an independent publishing house dedicated to discovering exceptional voices and creating beautifully crafted books that stand the test of time.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="books.html">Our Books</a></p>
+                    <p><a href="blog.html">Blog</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Categories</h4>
+                    <p>Fiction</p>
+                    <p>Non-Fiction</p>
+                    <p>Literary Fiction</p>
+                    <p>Mystery & Thriller</p>
+                    <p>Science Fiction & Fantasy</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Literary Lane, Bookville</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@inkwellpublishing.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Inkwell Publishing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog data with 18 posts
+        const blogPosts = [
+            {
+                id: 1,
+                title: "The Art of Storytelling: Techniques for Captivating Readers",
+                excerpt: "Master the timeless craft of storytelling with these essential techniques that will help you create compelling narratives and engage your readers...",
+                category: "writing",
+                tags: ["fiction"],
+                date: "June 15, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 2,
+                title: "2023 Book Cover Design Trends: What's Capturing Readers",
+                excerpt: "Discover the visual trends dominating book covers this year and learn how design choices influence reader perception and engagement...",
+                category: "design",
+                tags: ["marketing"],
+                date: "June 5, 2023",
+                readTime: "4 min read",
+                image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 3,
+                title: "In Conversation with Elena Rodriguez: Worldbuilding in Fantasy",
+                excerpt: "We sit down with bestselling fantasy author Elena Rodriguez to discuss her approach to creating immersive worlds and the inspiration...",
+                category: "publishing",
+                tags: ["fiction"],
+                date: "May 28, 2023",
+                readTime: "8 min read",
+                image: "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 4,
+                title: "The Rise of Independent Publishers: Changing the Literary Landscape",
+                excerpt: "How small presses are reshaping the publishing industry by championing diverse voices and innovative approaches to book production...",
+                category: "publishing",
+                tags: ["non-fiction"],
+                date: "May 18, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 5,
+                title: "The Editor's Craft: How Professional Editing Transforms Manuscripts",
+                excerpt: "A behind-the-scenes look at the editorial process and how professional editors help authors refine their work into polished, publishable...",
+                category: "writing",
+                tags: ["non-fiction", "editing"],
+                date: "May 10, 2023",
+                readTime: "7 min read",
+                image: "https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 6,
+                title: "Effective Book Marketing Strategies for Debut Authors",
+                excerpt: "Essential marketing tactics every new author should know to build their audience and maximize their book's visibility in a crowded...",
+                category: "marketing",
+                tags: ["marketing"],
+                date: "May 2, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                title: "Creating Memorable Characters: A Writer's Guide",
+                excerpt: "Learn techniques to develop compelling characters that readers will remember long after they finish your book...",
+                category: "writing",
+                tags: ["fiction"],
+                date: "April 25, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 8,
+                title: "The Future of Print Books in the Digital Age",
+                excerpt: "Exploring how traditional print books are adapting and thriving in an increasingly digital world...",
+                category: "publishing",
+                tags: ["non-fiction"],
+                date: "April 18, 2023",
+                readTime: "4 min read",
+                image: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 9,
+                title: "Building an Author Platform from Scratch",
+                excerpt: "Step-by-step guide to establishing your author brand and connecting with your target audience...",
+                category: "marketing",
+                tags: ["non-fiction"],
+                date: "April 10, 2023",
+                readTime: "7 min read",
+                image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 10,
+                title: "The Power of Book Blurbs: How to Get Them and Why They Matter",
+                excerpt: "Understanding the importance of book blurbs and strategies to secure compelling endorsements for your work...",
+                category: "marketing",
+                tags: ["marketing"],
+                date: "April 3, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 11,
+                title: "Self-Publishing vs Traditional Publishing: Which Path is Right for You?",
+                excerpt: "Comparing the pros and cons of self-publishing and traditional publishing to help authors make informed decisions...",
+                category: "publishing",
+                tags: ["non-fiction"],
+                date: "March 27, 2023",
+                readTime: "8 min read",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 12,
+                title: "The Art of Writing Compelling Dialogue",
+                excerpt: "Master the techniques for creating authentic and engaging dialogue that brings your characters to life...",
+                category: "writing",
+                tags: ["fiction"],
+                date: "March 20, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 13,
+                title: "Typography in Book Design: Choosing the Perfect Fonts",
+                excerpt: "How typography choices impact readability and the overall aesthetic of your book design...",
+                category: "design",
+                tags: ["design"],
+                date: "March 15, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 14,
+                title: "The Psychology of Book Cover Colors",
+                excerpt: "Understanding how color choices on book covers influence reader perception and purchasing decisions...",
+                category: "design",
+                tags: ["design", "marketing"],
+                date: "March 8, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 15,
+                title: "How to Craft the Perfect Query Letter",
+                excerpt: "Expert tips for writing query letters that grab literary agents' attention and increase your chances of getting published...",
+                category: "writing",
+                tags: ["writing"],
+                date: "March 1, 2023",
+                readTime: "7 min read",
+                image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 16,
+                title: "The Importance of Beta Readers in the Writing Process",
+                excerpt: "How to effectively use beta readers to improve your manuscript before publication...",
+                category: "writing",
+                tags: ["writing", "editing"],
+                date: "February 22, 2023",
+                readTime: "5 min read",
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 17,
+                title: "Maximizing Book Sales at Literary Festivals",
+                excerpt: "Strategies for authors to increase book sales and visibility when participating in literary events...",
+                category: "marketing",
+                tags: ["marketing"],
+                date: "February 15, 2023",
+                readTime: "6 min read",
+                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 18,
+                title: "The Evolution of the Publishing Industry: Past, Present, and Future",
+                excerpt: "A historical perspective on how publishing has transformed and predictions for its future direction...",
+                category: "publishing",
+                tags: ["publishing"],
+                date: "February 8, 2023",
+                readTime: "8 min read",
+                image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // Pagination variables
+        const postsPerPage = 6;
+        let currentPage = 1;
+        let totalPages = Math.ceil(blogPosts.length / postsPerPage);
+        
+        // Filter variables
+        let activeCategory = 'all';
+        let activeTag = 'all';
+        let filteredPosts = [...blogPosts];
+
+        // Function to filter blog posts based on active filters
+        function filterPosts() {
+            filteredPosts = blogPosts.filter(post => {
+                const categoryMatch = activeCategory === 'all' || post.category === activeCategory;
+                const tagMatch = activeTag === 'all' || post.tags.includes(activeTag);
+                return categoryMatch && tagMatch;
+            });
+            
+            totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages;
+            }
+        }
+
+        // Function to display blog posts for current page
+        function displayBlogPosts() {
+            const blogPostsContainer = document.getElementById('blogPosts');
+            blogPostsContainer.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const currentPosts = filteredPosts.slice(startIndex, endIndex);
+            
+            if (currentPosts.length === 0) {
+                blogPostsContainer.innerHTML = `
+                    <div class="no-results" style="text-align: center; padding: 3rem; background: white; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                        <h3>No posts found</h3>
+                        <p>Try adjusting your filters to see more content</p>
+                        <button class="btn" id="resetFiltersBtn" style="margin-top: 1rem;">Reset Filters</button>
+                    </div>
+                `;
+                
+                document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+                return;
+            }
+            
+            currentPosts.forEach(post => {
+                const blogCard = document.createElement('div');
+                blogCard.className = 'blog-card';
+                blogCard.innerHTML = `
+                    <div class="blog-image" style="background-image: url('${post.image}');"></div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <div>
+                                <span class="blog-tag">${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</span>
+                                <span><i class="far fa-calendar"></i> ${post.date}</span>
+                            </div>
+                            <span><i class="far fa-clock"></i> ${post.readTime}</span>
+                        </div>
+                        <h3>${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <a href="blog-details.html?id=${post.id}" class="read-more">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                `;
+                blogPostsContainer.appendChild(blogCard);
+            });
+        }
+
+        // Function to create pagination links
+        function createPagination() {
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+            
+            // Always show first page
+            if (totalPages > 0) {
+                const firstPage = document.createElement('li');
+                firstPage.innerHTML = `<a href="#" class="${1 === currentPage ? 'active' : ''}">1</a>`;
+                paginationContainer.appendChild(firstPage);
+                
+                firstPage.querySelector('a').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = 1;
+                    displayBlogPosts();
+                    createPagination();
+                });
+            }
+            
+            // Show current page and nearby pages
+            const startPage = Math.max(2, currentPage - 1);
+            const endPage = Math.min(totalPages - 1, currentPage + 1);
+            
+            if (startPage > 2) {
+                const ellipsis = document.createElement('li');
+                ellipsis.innerHTML = `<span>...</span>`;
+                paginationContainer.appendChild(ellipsis);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                if (i > 1 && i < totalPages) {
+                    const pageLi = document.createElement('li');
+                    pageLi.innerHTML = `<a href="#" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+                    paginationContainer.appendChild(pageLi);
+                    
+                    pageLi.querySelector('a').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentPage = i;
+                        displayBlogPosts();
+                        createPagination();
+                    });
+                }
+            }
+            
+            if (endPage < totalPages - 1) {
+                const ellipsis = document.createElement('li');
+                ellipsis.innerHTML = `<span>...</span>`;
+                paginationContainer.appendChild(ellipsis);
+            }
+            
+            // Always show last page if different from first
+            if (totalPages > 1) {
+                const lastPage = document.createElement('li');
+                lastPage.innerHTML = `<a href="#" class="${totalPages === currentPage ? 'active' : ''}">${totalPages}</a>`;
+                paginationContainer.appendChild(lastPage);
+                
+                lastPage.querySelector('a').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = totalPages;
+                    displayBlogPosts();
+                    createPagination();
+                });
+            }
+            
+            // Update arrow states
+            document.getElementById('prevPage').classList.toggle('disabled', currentPage === 1);
+            document.getElementById('nextPage').classList.toggle('disabled', currentPage === totalPages);
+        }
+
+        // Function to reset all filters
+        function resetFilters() {
+            activeCategory = 'all';
+            activeTag = 'all';
+            
+            // Remove active classes
+            document.querySelectorAll('.filter-category').forEach(el => {
+                el.classList.remove('active');
+                if (el.dataset.category === 'all') {
+                    el.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.filter-tag').forEach(el => {
+                el.classList.remove('active');
+                if (el.dataset.tag === 'all') {
+                    el.classList.add('active');
+                }
+            });
+            
+            filterPosts();
+            currentPage = 1;
+            displayBlogPosts();
+            createPagination();
+        }
+
+        // Initialize the blog
+        function initBlog() {
+            // Set initial active filters
+            document.querySelector('.filter-category[data-category="all"]').classList.add('active');
+            document.querySelector('.filter-tag[data-tag="all"]').classList.add('active');
+            
+            filterPosts();
+            displayBlogPosts();
+            createPagination();
+            
+            // Event listeners for category filters
+            document.querySelectorAll('.filter-category').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all
+                    document.querySelectorAll('.filter-category').forEach(f => f.classList.remove('active'));
+                    
+                    // Add active class to clicked
+                    filter.classList.add('active');
+                    
+                    // Update active category
+                    activeCategory = filter.dataset.category;
+                    
+                    // Apply filters and reset to first page
+                    filterPosts();
+                    currentPage = 1;
+                    displayBlogPosts();
+                    createPagination();
+                });
+            });
+            
+            // Event listeners for tag filters
+            document.querySelectorAll('.filter-tag').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all
+                    document.querySelectorAll('.filter-tag').forEach(f => f.classList.remove('active'));
+                    
+                    // Add active class to clicked
+                    filter.classList.add('active');
+                    
+                    // Update active tag
+                    activeTag = filter.dataset.tag;
+                    
+                    // Apply filters and reset to first page
+                    filterPosts();
+                    currentPage = 1;
+                    displayBlogPosts();
+                    createPagination();
+                });
+            });
+            
+            // Reset filters button
+            document.getElementById('resetFilters').addEventListener('click', resetFilters);
+            
+            // Show all button
+            document.getElementById('showAll').addEventListener('click', resetFilters);
+            
+            // Pagination arrows
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayBlogPosts();
+                    createPagination();
+                }
+            });
+            
+            document.getElementById('nextPage').addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayBlogPosts();
+                    createPagination();
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('nav ul');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for subscribing to our newsletter!');
+                    newsletterForm.reset();
+                });
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initBlog);
+    </script>
+</body>
+</html>

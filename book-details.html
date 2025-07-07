@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details | PageCraft Publishing</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+ 
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Page<span>Craft</span></a>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="books.html" class="active">Our Books</a></li>
+                        <li><a href="blog.html">Blogs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Book Hero -->
+    <section class="book-hero">
+        <div class="container">
+            <div class="book-hero-content">
+                <h1 id="book-title">Book Title</h1>
+                <p id="book-tagline">A captivating tagline for the book</p>
+                <a href="#purchase" class="btn">Purchase Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Details -->
+    <section class="section">
+        <div class="container">
+            <div class="book-details-container">
+                <!-- Book Cover -->
+                <div class="book-cover-container">
+                    <div class="book-cover-large" id="book-cover">
+                        <div id="cover-text">Book Cover</div>
+                    </div>
+                    <div class="book-badge" id="book-badge">Bestseller</div>
+                </div>
+                
+                <!-- Book Info -->
+                <div class="book-info">
+                    <div class="book-header">
+                        <div>
+                            <h1 class="book-title" id="detail-title">Book Title</h1>
+                            <div class="book-author" id="book-author">by Author Name</div>
+                        </div>
+                        <div class="book-rating">
+                            <div class="review-rating" id="book-rating">★★★★☆</div>
+                            <div id="rating-text">4.2/5.0 (124 reviews)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="book-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <div class="meta-label">Genre</div>
+                                <div class="meta-value" id="book-genre">Genre</div>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div>
+                                <div class="meta-label">Published</div>
+                                <div class="meta-value" id="book-published">Date</div>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div>
+                                <div class="meta-label">Pages</div>
+                                <div class="meta-value" id="book-pages">000 pages</div>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div>
+                                <div class="meta-label">Language</div>
+                                <div class="meta-value" id="book-language">English</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="book-description" id="book-description">
+                        <p>Book description will appear here...</p>
+                    </div>
+                    
+                    <div class="book-actions">
+                        <a href="#purchase" class="btn" id="purchase">Purchase Now</a>
+                        <a href="#" class="btn btn-outline">Read Preview</a>
+                        <a href="#" class="btn btn-outline"><i class="fas fa-heart"></i> Add to Wishlist</a>
+                    </div>
+                    
+                    <div class="purchase-options">
+                        <h3>Available Formats</h3>
+                        <div class="options-grid" id="format-options">
+                            <!-- Formats will be added dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="reviews-section">
+                        <h3>Reader Reviews</h3>
+                        <div id="reviews-container">
+                            <!-- Reviews will be added dynamically -->
+                        </div>
+                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">See All Reviews</a>
+                    </div>
+                    
+                    <div class="author-section">
+                        <div class="author-avatar" id="author-avatar">A</div>
+                        <div class="author-info">
+                            <h3 id="author-name">About the Author</h3>
+                            <div class="author-bio" id="author-bio">
+                                <p>Author biography will appear here...</p>
+                            </div>
+                            <a href="#" class="btn btn-outline">View All Books</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="related-books">
+                <div class="section-title">
+                    <h2>You May Also Like</h2>
+                    <p>Discover similar titles from our collection</p>
+                </div>
+                
+                <div class="books-grid" id="related-books">
+                    <!-- Related books will be added dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About PageCraft</h4>
+                    <p>We are an independent publishing house dedicated to discovering exceptional voices and creating beautifully crafted books that stand the test of time.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <p><a href="index.html">Home</a></p>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="books.html">Book Catalog</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Categories</h4>
+                    <p>Fiction</p>
+                    <p>Non-Fiction</p>
+                    <p>Literary Fiction</p>
+                    <p>Mystery & Thriller</p>
+                    <p>Science Fiction & Fantasy</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Literary Lane, Bookville</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@pagecraft.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 PageCraft Publishing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Book database with multiple books
+        const books = [
+            {
+                id: 1,
+                title: "Whispers of the Ancient Forest",
+                author: "Elena Rodriguez",
+                genre: "Fantasy Fiction",
+                published: "March 15, 2023",
+                pages: "384 pages",
+                language: "English",
+                description: "In the heart of the ancient Verdant Woods, a young botanist discovers she can communicate with the forest. Her gift comes at a crucial moment as a shadow threatens to consume the woods and erase its ancient magic. This enchanting tale weaves together themes of environmental stewardship, self-discovery, and the enduring magic of nature.",
+                tagline: "A magical journey through enchanted woods where nature speaks",
+                rating: 4.2,
+                reviews: 124,
+                badge: "Bestseller",
+                coverColor: "#2c3e50",
+                formats: [
+                    { name: "Hardcover", price: "$24.99" },
+                    { name: "Paperback", price: "$16.99" },
+                    { name: "eBook", price: "$9.99" },
+                    { name: "Audiobook", price: "$14.99" }
+                ],
+                reviewsList: [
+                    { author: "Sarah J.", date: "May 15, 2023", rating: 5, text: "This book completely transported me to another world. The descriptions were so vivid I could almost smell the pine needles." },
+                    { author: "Michael T.", date: "April 28, 2023", rating: 4, text: "Rodriguez has created a magical ecosystem that feels both ancient and alive. The themes of environmental protection are timely." }
+                ],
+                authorInfo: {
+                    name: "Elena Rodriguez",
+                    bio: "Elena Rodriguez is an award-winning author and environmental activist whose work explores the intersection of nature, magic, and human connection. With a background in botany and folklore studies, she brings scientific accuracy and mythological depth to her fantasy worlds.",
+                    initials: "ER"
+                },
+                relatedBooks: [2, 3, 4]
+            },
+            {
+                id: 2,
+                title: "The Midnight Archive",
+                author: "Thomas Bennett",
+                genre: "Mystery",
+                published: "October 8, 2022",
+                pages: "320 pages",
+                language: "English",
+                description: "In a hidden library that only appears at midnight, forbidden knowledge waits for those brave enough to seek it. When rare book collector Arthur Vance discovers the Archive, he becomes entangled in a centuries-old battle between secret societies. As he delves deeper, Arthur realizes the Archive holds secrets that could rewrite history.",
+                tagline: "A hidden library that only appears at midnight holds forbidden knowledge",
+                rating: 4.7,
+                reviews: 89,
+                badge: "New Release",
+                coverColor: "#3498db",
+                formats: [
+                    { name: "Hardcover", price: "$25.99" },
+                    { name: "Paperback", price: "$17.99" },
+                    { name: "eBook", price: "$10.99" }
+                ],
+                reviewsList: [
+                    { author: "Daniel R.", date: "Nov 2, 2022", rating: 5, text: "A brilliant blend of mystery and fantasy. The concept of a library that only appears at night is pure genius." },
+                    { author: "Jennifer K.", date: "Oct 30, 2022", rating: 4, text: "The historical details woven into this modern mystery are impressive. Bennett clearly did his research." }
+                ],
+                authorInfo: {
+                    name: "Thomas Bennett",
+                    bio: "Thomas Bennett is a historian and novelist known for blending historical facts with supernatural elements. A former rare book dealer, he brings authenticity to his stories about ancient texts and hidden knowledge. Bennett holds a PhD in Medieval History from Cambridge University.",
+                    initials: "TB"
+                },
+                relatedBooks: [1, 3, 5]
+            },
+            {
+                id: 3,
+                title: "Beneath Azure Skies",
+                author: "Olivia Chen",
+                genre: "Romance",
+                published: "June 20, 2021",
+                pages: "352 pages",
+                language: "English",
+                description: "When architect Mia Sullivan inherits a crumbling villa on the Italian coast, she plans to quickly renovate and sell. But the villa holds secrets, and the local historian Marco Rossi seems determined to keep her from uncovering them. As they work together to restore the villa, Mia discovers that some histories are worth preserving, and some loves are worth fighting for.",
+                tagline: "A sweeping romance set against the backdrop of the Mediterranean",
+                rating: 4.1,
+                reviews: 215,
+                badge: "",
+                coverColor: "#e74c3c",
+                formats: [
+                    { name: "Paperback", price: "$16.99" },
+                    { name: "eBook", price: "$8.99" },
+                    { name: "Audiobook", price: "$12.99" }
+                ],
+                reviewsList: [
+                    { author: "Amanda S.", date: "July 15, 2021", rating: 5, text: "The descriptions of the Italian coast made me feel like I was there. The romance was perfectly paced." },
+                    { author: "Robert L.", date: "Aug 3, 2021", rating: 4, text: "A delightful summer read with just the right amount of mystery mixed in with the romance." }
+                ],
+                authorInfo: {
+                    name: "Olivia Chen",
+                    bio: "Olivia Chen crafts emotionally resonant stories about love, heritage, and finding home. A first-generation American, her writing explores cultural identity and the immigrant experience. When not writing, Olivia leads culinary tours through Italy and Greece.",
+                    initials: "OC"
+                },
+                relatedBooks: [1, 4, 6]
+            },
+            {
+                id: 4,
+                title: "Echoes of Silence",
+                author: "Michael Donovan",
+                genre: "Science Fiction",
+                published: "January 10, 2020",
+                pages: "416 pages",
+                language: "English",
+                description: "In a future where sound is forbidden to conserve energy, society communicates through sign language and written words. Anya, a sound engineer from the past, awakens from cryosleep to this silent world. When she discovers she can still hear, she becomes a target for the government and a symbol for the resistance fighting to reclaim their voices.",
+                tagline: "In a world without sound, one woman's voice could change everything",
+                rating: 4.3,
+                reviews: 176,
+                badge: "Award Winner",
+                coverColor: "#2c3e50",
+                formats: [
+                    { name: "Hardcover", price: "$26.99" },
+                    { name: "Paperback", price: "$18.99" },
+                    { name: "eBook", price: "$11.99" },
+                    { name: "Audiobook", price: "$15.99" }
+                ],
+                reviewsList: [
+                    { author: "David P.", date: "Feb 5, 2020", rating: 5, text: "A brilliant concept executed perfectly. The world-building is immersive and thought-provoking." },
+                    { author: "Sophia M.", date: "Jan 28, 2020", rating: 4, text: "The exploration of how society would function without sound was fascinating. A unique take on dystopian fiction." }
+                ],
+                authorInfo: {
+                    name: "Michael Donovan",
+                    bio: "Michael Donovan is a Hugo-nominated author known for his innovative science fiction concepts. With a background in acoustical engineering, he brings technical precision to his speculative worlds. Donovan's work often explores sensory experiences and communication.",
+                    initials: "MD"
+                },
+                relatedBooks: [2, 5, 1]
+            }
+        ];
+
+        // Get book ID from URL
+        function getBookIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id')) || 1;
+        }
+
+        // Find book by ID
+        function findBookById(id) {
+            return books.find(book => book.id === id) || books[0];
+        }
+
+        // Generate star rating
+        function generateStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating - fullStars >= 0.5;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) stars += '★';
+            if (halfStar) stars += '½';
+            for (let i = 0; i < emptyStars; i++) stars += '☆';
+            
+            return stars;
+        }
+
+        // Format book details
+        function formatBookDetails(book) {
+            // Update main details
+            document.getElementById('book-title').textContent = book.title;
+            document.getElementById('detail-title').textContent = book.title;
+            document.getElementById('book-tagline').textContent = book.tagline;
+            document.getElementById('book-author').textContent = `by ${book.author}`;
+            document.getElementById('book-genre').textContent = book.genre;
+            document.getElementById('book-published').textContent = book.published;
+            document.getElementById('book-pages').textContent = book.pages;
+            document.getElementById('book-language').textContent = book.language;
+            document.getElementById('book-description').innerHTML = `<p>${book.description}</p>`;
+            
+            // Update badge
+            const badgeElement = document.getElementById('book-badge');
+            badgeElement.textContent = book.badge;
+            badgeElement.style.display = book.badge ? 'inline-block' : 'none';
+            
+            // Update rating
+            const ratingStars = generateStarRating(book.rating);
+            document.getElementById('book-rating').textContent = ratingStars;
+            document.getElementById('rating-text').textContent = `${book.rating}/5.0 (${book.reviews} reviews)`;
+            
+            // Update cover
+            const coverElement = document.getElementById('book-cover');
+            coverElement.style.background = `linear-gradient(135deg, ${book.coverColor} 0%, #1c2a3a 100%)`;
+            document.getElementById('cover-text').textContent = book.title;
+            
+            // Update formats
+            const formatsContainer = document.getElementById('format-options');
+            formatsContainer.innerHTML = '';
+            book.formats.forEach(format => {
+                const formatElement = document.createElement('div');
+                formatElement.className = 'option-card';
+                if (format.name === 'Hardcover') formatElement.classList.add('selected');
+                formatElement.innerHTML = `
+                    <div class="option-name">${format.name}</div>
+                    <div class="option-price">${format.price}</div>
+                `;
+                formatsContainer.appendChild(formatElement);
+            });
+            
+            // Update reviews
+            const reviewsContainer = document.getElementById('reviews-container');
+            reviewsContainer.innerHTML = '';
+            book.reviewsList.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-card';
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">${review.author}</div>
+                        <div class="review-date">${review.date}</div>
+                    </div>
+                    <div class="review-rating">${generateStarRating(review.rating)}</div>
+                    <p>${review.text}</p>
+                `;
+                reviewsContainer.appendChild(reviewElement);
+            });
+            
+            // Update author info
+            document.getElementById('author-name').textContent = `About ${book.authorInfo.name}`;
+            document.getElementById('author-bio').innerHTML = `<p>${book.authorInfo.bio}</p>`;
+            document.getElementById('author-avatar').textContent = book.authorInfo.initials;
+            
+            // Update related books
+            const relatedContainer = document.getElementById('related-books');
+            relatedContainer.innerHTML = '';
+            book.relatedBooks.forEach(relatedId => {
+                const relatedBook = findBookById(relatedId);
+                if (relatedBook) {
+                    const bookElement = document.createElement('div');
+                    bookElement.className = 'book-card';
+                    bookElement.innerHTML = `
+                        <div class="dbook-cover" style="background: linear-gradient(135deg, ${relatedBook.coverColor} 0%, #1c2a3a 100%);">
+                            <div style="color: white; padding: 20px;">${relatedBook.title}</div>
+                        </div>
+                        <div class="book-info-small">
+                            <h3>${relatedBook.title}</h3>
+                            <span class="author">${relatedBook.author}</span>
+                            <a href="book-details.html?id=${relatedBook.id}" class="btn" style="margin-top: 1rem; width: 100%;">View Details</a>
+                        </div>
+                    `;
+                    relatedContainer.appendChild(bookElement);
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookId = getBookIdFromUrl();
+            const book = findBookById(bookId);
+            formatBookDetails(book);
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('nav ul');
+            
+            if(mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Format selection
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.option-card')) {
+                    const cards = document.querySelectorAll('.option-card');
+                    cards.forEach(card => card.classList.remove('selected'));
+                    e.target.closest('.option-card').classList.add('selected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
