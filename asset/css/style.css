@@ -262,7 +262,7 @@
         }
 
         /* ===== ABOUT SECTION ===== */
-        .about-content {
+        .homepage-about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
@@ -666,7 +666,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .about-content,
+            .homepage-about-content,
             .contact-container {
                 grid-template-columns: 1fr;
             }
@@ -783,6 +783,34 @@
             position: relative;
             max-width: 800px;
             margin: 3rem auto;
+        }
+        /* Add this to your CSS */
+        .timeline::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Adjust the timeline item margins */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            clear: both; /* This ensures each item starts below the previous one */
+        }
+
+        /* For mobile view, adjust the margin-left */
+        @media (max-width: 768px) {
+            .timeline-content {
+                width: auto;
+                float: none !important;
+                margin-left: 70px;
+                margin-bottom: 2rem; /* Add some bottom margin */
+            }
+            
+            /* Add more space after the timeline on mobile */
+            .timeline {
+                margin-bottom: 4rem;
+            }
         }
         
         .timeline::before {
