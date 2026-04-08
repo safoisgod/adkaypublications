@@ -1,0 +1,78 @@
+[
+  {
+    "model": "services.service",
+    "pk": 1,
+    "fields": {
+      "title": "Manuscript Editing",
+      "slug": "manuscript-editing",
+      "icon": "edit",
+      "short_description": "Professional structural, line, and copy editing by our senior editorial team.",
+      "full_description": "<p>Our editorial team works closely with authors to refine their manuscripts at every level — from high-level structural feedback to meticulous line editing and final copy-editing passes.</p>",
+      "features": "[\"Developmental editing\", \"Line editing\", \"Copy editing\", \"Proofreading\", \"Editorial report\"]",
+      "cta_text": "Submit Your Manuscript",
+      "cta_link": "",
+      "is_active": true,
+      "is_featured": true,
+      "display_order": 1,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 2,
+    "fields": {
+      "title": "Book Design & Production",
+      "slug": "book-design-production",
+      "icon": "layers",
+      "short_description": "Award-winning cover design and interior typesetting for print and digital formats.",
+      "full_description": "<p>From concept to finished book, our design studio creates visually stunning covers and elegantly typeset interiors that stand out in any market.</p>",
+      "features": "[\"Cover design\", \"Interior typesetting\", \"eBook formatting\", \"Print-ready files\", \"Design consultation\"]",
+      "cta_text": "View Portfolio",
+      "cta_link": "",
+      "is_active": true,
+      "is_featured": true,
+      "display_order": 2,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 3,
+    "fields": {
+      "title": "Rights & Distribution",
+      "slug": "rights-distribution",
+      "icon": "globe",
+      "short_description": "Global rights management and distribution across all major retail and library channels.",
+      "full_description": "<p>Our rights team actively pursues translation deals, foreign rights sales, and licensing opportunities in over 40 territories worldwide.</p>",
+      "features": "[\"Translation rights\", \"Foreign rights\", \"Digital distribution\", \"Library supply\", \"Retail placement\"]",
+      "cta_text": "Explore Rights",
+      "cta_link": "",
+      "is_active": true,
+      "is_featured": true,
+      "display_order": 3,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "services.service",
+    "pk": 4,
+    "fields": {
+      "title": "Marketing & Publicity",
+      "slug": "marketing-publicity",
+      "icon": "megaphone",
+      "short_description": "Strategic campaigns, press outreach, and digital marketing to maximise your book's reach.",
+      "full_description": "<p>Our publicity team crafts bespoke campaigns combining traditional media, social strategy, and influencer outreach to give each title the launch it deserves.</p>",
+      "features": "[\"Press releases\", \"Social media strategy\", \"Influencer outreach\", \"Launch events\", \"Review copies\"]",
+      "cta_text": "Get Started",
+      "cta_link": "",
+      "is_active": true,
+      "is_featured": false,
+      "display_order": 4,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  }
+]
