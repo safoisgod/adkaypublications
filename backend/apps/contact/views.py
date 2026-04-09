@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.throttling import AnonRateThrottle
 
+from .models import ContactMessage
 from .serializers import ContactMessageSerializer
 from .tasks import send_contact_notification
 
@@ -53,3 +54,4 @@ class ContactMessageView(APIView):
             },
             status=status.HTTP_201_CREATED,
         )
+

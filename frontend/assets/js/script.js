@@ -33,11 +33,20 @@ const API = {
     const defaults = { headers: { 'Content-Type': 'application/json' }, ...options };
     const response = await fetch(url, defaults);
     if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(error.detail || `HTTP ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      console.log('API Error full response:', JSON.stringify(errorData, null, 2)); // ADD THIS
+      const unwrapped = errorData.data || errorData;
+      const msg = unwrapped.detail
+        || Object.entries(unwrapped)
+            .filter(([k]) => k !== 'status')
+            .map(([k, v]) => `${k}: ${[].concat(v).join(', ')}`)
+            .join(' | ')
+        || `HTTP ${response.status}`;
+      throw new Error(msg);
     }
     return response.json();
   },
+
   getBooks:    ()     => API.fetch(CONFIG.ENDPOINTS.books),
   getBook:     (slug) => API.fetch(CONFIG.ENDPOINTS.book(slug)),
   getPosts:    ()     => API.fetch(CONFIG.ENDPOINTS.blog),
@@ -980,10 +989,17 @@ const ContactPage = {
     try {
       await API.postContact(data);
       form.reset();
-      if (success) { success.textContent = "Your message has been sent. We'll be in touch shortly."; success.style.display = 'block'; }
+      if (success) {
+        success.textContent = "Your message has been sent. We'll be in touch shortly.";
+        success.style.display = 'block';
+      }
     } catch (err) {
-      if (error) { error.textContent = `Failed to send: ${err.message}`; error.style.display = 'block'; }
-    } finally { btn.textContent = 'Send Message'; btn.disabled = false; }
+      // Show the actual API error message if available
+      const msg = err.message || 'Failed to send. Please try again.';
+      if (error) { error.textContent = msg; error.style.display = 'block'; }
+    } finally {
+      btn.textContent = 'Send Message'; btn.disabled = false;
+    }
   },
 };
 
@@ -1239,7 +1255,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (onPage('blog-detail.html'))  BlogDetailPage.init();
   if (onPage('team.html'))         TeamPage.init();
   if (onPage('services.html'))     ServicesPage.init();
-  if (onPage('contact.html'))      ContactPage.init();
+  if (onPage('contact.html') || onPage('about.html')) ContactPage.init();
   if (onPage('about.html'))        initTimeline();
 });
 
