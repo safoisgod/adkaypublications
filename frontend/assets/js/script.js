@@ -736,7 +736,19 @@ const BlogPage = {
         return;
       }
       const featured = this.allPosts.find(p => p.is_featured) || this.allPosts[0];
-      if (featuredEl && featured) featuredEl.innerHTML = renderFeaturedPost(featured);
+      if (featuredEl && featured) {
+        featuredEl.innerHTML = renderFeaturedPost(featured);
+
+        // ── FIX: animate the featured post directly since ScrollTrigger
+        //         already ran before this element existed in the DOM ──
+        const featuredEl2 = featuredEl.querySelector('.blog-featured');
+        if (featuredEl2) {
+          featuredEl2.style.opacity = '1';
+          featuredEl2.style.transform = 'none';
+          gsap.from(featuredEl2, { opacity: 0, y: 30, duration: 0.85, ease: 'power3.out' });
+        }
+      }
+
       const filterEl = document.getElementById('blog-filter-bar');
       if (filterEl) this.renderFilters(filterEl);
       this.render(featured?.slug);

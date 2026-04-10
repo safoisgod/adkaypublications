@@ -696,6 +696,11 @@ main {
   padding: var(--space-md);
 }
 
+#blog-featured-container .fade-up {
+  opacity: 1;
+  transform: none;
+}
+
 .blog-card {
   cursor: pointer;
 }
