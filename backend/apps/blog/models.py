@@ -5,7 +5,8 @@ from django.db import models
 from django.utils.text import slugify
 from apps.core.models import TimeStampedModel, PublishableModel, SEOModel
 from apps.core.utils import blog_cover_path, calculate_reading_time
-from cloudinary.models import CloudinaryField  # ✅ added
+from cloudinary.models import CloudinaryField
+from apps.core.image_utils import CloudinaryImageMixin
 
 
 class Category(TimeStampedModel):
@@ -50,7 +51,8 @@ class Tag(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
-class Post(PublishableModel, SEOModel):
+class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
+    CLOUDINARY_IMAGE_FIELDS = ['cover_image']
     """
     Blog post.
     Author linked to CustomUser.

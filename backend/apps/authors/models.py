@@ -5,15 +5,16 @@ from django.db import models
 from django.utils.text import slugify
 from apps.core.models import TimeStampedModel
 from apps.core.utils import author_photo_path
-from cloudinary.models import CloudinaryField  # ✅ added
+from cloudinary.models import CloudinaryField 
+from apps.core.image_utils import CloudinaryImageMixin
 
-
-class Author(TimeStampedModel):
+class Author(CloudinaryImageMixin, TimeStampedModel):
+    CLOUDINARY_IMAGE_FIELDS = ['photo']
     """
     Represents an author or team member displayed on the site.
     Can optionally be linked to a CustomUser account.
     """
-    user = models.OneToOneField(
+    user = models.OneToOneField(    
         'accounts.CustomUser',
         on_delete=models.SET_NULL,
         null=True, blank=True,

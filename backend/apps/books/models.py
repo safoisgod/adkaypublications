@@ -5,7 +5,8 @@ from django.db import models
 from django.utils.text import slugify
 from apps.core.models import TimeStampedModel, PublishableModel, SEOModel
 from apps.core.utils import book_cover_path
-from cloudinary.models import CloudinaryField  # ✅ added
+from cloudinary.models import CloudinaryField  
+from apps.core.image_utils import CloudinaryImageMixin
 
 
 class Genre(TimeStampedModel):
@@ -29,7 +30,8 @@ class Genre(TimeStampedModel):
         super().save(*args, **kwargs)
 
 
-class Book(PublishableModel, SEOModel):
+class Book(CloudinaryImageMixin, PublishableModel, SEOModel):
+    CLOUDINARY_IMAGE_FIELDS = ['cover_image']
     """
     Core Book model.
     Linked M2M to Author; single Genre FK.
