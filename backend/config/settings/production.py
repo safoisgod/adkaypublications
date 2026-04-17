@@ -59,25 +59,15 @@ if SENTRY_DSN:
 # LOGGING
 # ─────────────────────────────────────────
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '[{levelname}] {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'handlers': {
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'logs' / 'django.log',
-            'maxBytes': 1024 * 1024 * 10,
-            'backupCount': 5,
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {'handlers': ['file'], 'level': 'WARNING'},
-        'apps': {'handlers': ['file'], 'level': 'INFO', 'propagate': False},
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
     },
 }
