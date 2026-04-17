@@ -9,7 +9,7 @@
    1. CONFIGURATION
    ───────────────────────────────────────────────────────────── */
 const CONFIG = {
-  API_BASE: 'http://127.0.0.1:8000',
+  API_BASE: window.location.origin,
   ENDPOINTS: {
     books:      '/api/books/',
     book:       (slug) => `/api/books/${slug}/`,
