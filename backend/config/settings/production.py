@@ -23,7 +23,7 @@ X_FRAME_OPTIONS = 'DENY'
 # WHITENOISE FOR STATIC
 # ─────────────────────────────────────────
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ─────────────────────────────────────────
 # S3 MEDIA STORAGE (optional)
