@@ -107,11 +107,6 @@ header.scrolled {
   justify-content: space-between;
 }
 
-.logo {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
 
 .logo-name {
   font-family: var(--font-display);
@@ -131,6 +126,17 @@ header.scrolled {
 }
 
 /* Desktop Nav */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 42px; /* adjust to match your navbar height */
+  width: auto;
+  object-fit: contain;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -1342,6 +1348,17 @@ footer {
   background: rgba(255,255,255,0.1);
   color: var(--white);
   border-color: rgba(255,255,255,0.3);
+}
+
+.footer-logo {
+  margin-bottom: 1rem;
+}
+
+.footer-logo-img {
+  height: 50px; /* slightly bigger than navbar looks good in footer */
+  width: auto;
+  display: block;
+  opacity: 0.95; /* subtle blend into footer */
 }
 
 /* ============================================================
