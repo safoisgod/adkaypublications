@@ -9,7 +9,7 @@
    1. CONFIGURATION
    ───────────────────────────────────────────────────────────── */
 const CONFIG = {
-  API_BASE: window.location.origin,
+  API_BASE: 'https://adkaypublications.com',
   ENDPOINTS: {
     books:      '/api/books/',
     book:       (slug) => `/api/books/${slug}/`,
