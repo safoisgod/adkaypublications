@@ -1277,15 +1277,12 @@ footer {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
   gap: var(--space-lg);
   padding-bottom: var(--space-xl);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   margin-bottom: var(--space-md);
 }
-
-.footer-brand .logo-name { color: var(--white); font-size: 1.8rem; margin-bottom: var(--space-xs); }
-.footer-brand .logo-sub { color: rgba(255,255,255,0.4); margin-bottom: var(--space-md); }
 
 .footer-tagline {
   font-size: 0.875rem;
@@ -1304,7 +1301,11 @@ footer {
   margin-bottom: var(--space-md);
 }
 
-.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .footer-col ul li a {
   font-size: 0.875rem;
@@ -1312,8 +1313,56 @@ footer {
   transition: color var(--transition-fast);
 }
 
-.footer-col ul li a:hover { color: var(--white); }
+.footer-col ul li a:hover {
+  color: var(--white);
+}
 
+/* NEWSLETTER */
+.footer-newsletter {
+  max-width: 260px;
+}
+
+.newsletter-text {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 6px;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+}
+
+.newsletter-form input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.newsletter-form button {
+  padding: 8px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  background: var(--white);
+  color: var(--blue-deep);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.newsletter-form button:hover {
+  opacity: 0.85;
+}
+
+/* BOTTOM */
 .footer-bottom {
   display: flex;
   align-items: center;
@@ -1355,11 +1404,12 @@ footer {
 }
 
 .footer-logo-img {
-  height: 50px; /* slightly bigger than navbar looks good in footer */
+  height: 50px;
   width: auto;
   display: block;
-  opacity: 0.95; /* subtle blend into footer */
+  opacity: 0.95;
 }
+
 
 /* ============================================================
    PAGE BANNER
