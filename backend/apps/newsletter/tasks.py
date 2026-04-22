@@ -3,7 +3,7 @@ Celery tasks for the Newsletter app.
 """
 import logging
 from celery import shared_task
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 
 logger = logging.getLogger('apps.newsletter')
@@ -29,13 +29,16 @@ def send_welcome_email(self, subscriber_id):
             f"The {settings.SITE_NAME} Team"
         )
 
-        send_mail(
+        email = EmailMessage(
             subject=subject,
-            message=body,
+            body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[sub.email],
-            fail_silently=False,
+            to=[sub.email],
+            reply_to=[settings.ADMIN_EMAIL],
         )
+
+        email.send(fail_silently=False)
+
         logger.info(f"Welcome email sent to {sub.email}")
 
     except Exception as exc:

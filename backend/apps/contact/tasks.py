@@ -3,9 +3,8 @@ Celery tasks for the Contact app.
 """
 import logging
 from celery import shared_task
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
-from django.template.loader import render_to_string
 
 logger = logging.getLogger('apps.contact')
 
@@ -33,13 +32,15 @@ def send_contact_notification(self, message_id):
             f"Admin URL: {settings.SITE_URL}/admin/contact/contactmessage/{msg.pk}/change/"
         )
 
-        send_mail(
+        email = EmailMessage(
             subject=subject,
-            message=body,
+            body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.ADMIN_EMAIL],
-            fail_silently=False,
+            to=[settings.ADMIN_EMAIL],
+            reply_to=[msg.email],
         )
+
+        email.send(fail_silently=False)
 
         # Also send auto-reply to sender
         send_contact_autoreply.delay(message_id)
