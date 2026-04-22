@@ -296,16 +296,32 @@ function renderTeamCard(author) {
 
 function renderSearchResult(item) {
   const imgSrc = API.imgUrl(item.image || item.cover);
-  const type   = item.type || 'result';
-  const detail = type === 'book'
-    ? `book-detail.html?slug=${item.slug || item.id}`
-    : `blog-detail.html?slug=${item.slug || item.id}`;
+
+  const type = item.type || 'result';
+
+  const title =
+    item.title ||
+    item.name ||
+    item.full_name ||
+    'Untitled';
+
+  const detail =
+    type === 'book'
+      ? `book-detail.html?slug=${item.slug || item.id}`
+      : type === 'post'
+      ? `blog-detail.html?slug=${item.slug || item.id}`
+      : type === 'author'
+      ? `team.html` // or custom author page
+      : '#';
+
   return `
     <div class="search-result-item" onclick="window.location='${detail}'" style="cursor:pointer">
-      <div class="search-result-thumb"><img src="${imgSrc}" alt="${item.title}" loading="lazy"></div>
+      <div class="search-result-thumb">
+        <img src="${imgSrc}" alt="${title}" loading="lazy">
+      </div>
       <div>
         <div class="search-result-type">${type}</div>
-        <div class="search-result-title">${item.title}</div>
+        <div class="search-result-title">${title}</div>
       </div>
     </div>`;
 }
@@ -1060,13 +1076,42 @@ const Search = {
   },
   async query(q, resultsEl) {
     if (!resultsEl) return;
-    if (!q || q.trim().length < 2) { resultsEl.innerHTML = ''; return; }
+
+    if (!q || q.trim().length < 2) {
+      resultsEl.innerHTML = '';
+      return;
+    }
+
     resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">Searching…</p>`;
+
     try {
-      const results = toArray(await API.search(q.trim()));
-      if (!results.length) { resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">No results for "${q}"</p>`; return; }
-      resultsEl.innerHTML = results.slice(0, 8).map(r => renderSearchResult(r)).join('');
-    } catch { resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">Search unavailable</p>`; }
+      const raw = await API.search(q.trim());
+      console.log("SEARCH RESPONSE:", raw);
+
+      let results = [];
+
+      if (raw?.data) {
+        results = [
+          ...(raw.data.books || []).map(b => ({ ...b, type: 'book' })),
+          ...(raw.data.posts || []).map(p => ({ ...p, type: 'post' })),
+          ...(raw.data.authors || []).map(a => ({ ...a, type: 'author' })),
+        ];
+      }
+
+      if (!results.length) {
+        resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">No results for "${q}"</p>`;
+        return;
+      }
+
+      resultsEl.innerHTML = results
+        .slice(0, 8)
+        .map(r => renderSearchResult(r))
+        .join('');
+
+    } catch (err) {
+      console.error("SEARCH ERROR:", err);
+      resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">Search unavailable</p>`;
+    }
   },
 };
 
