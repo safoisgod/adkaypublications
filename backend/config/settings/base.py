@@ -242,7 +242,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL 
 # ────────────────────────────────────────
 
-ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@adkaypublications.com')
+ADMIN_EMAIL = config('ADMIN_EMAIL', default='iamnanasafo@adkaypublications.com')
 
 # ─────────────────────────────────────────
 # CELERY
