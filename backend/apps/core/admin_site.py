@@ -11,14 +11,14 @@ from datetime import timedelta
 
 class PublishingAdminSite(admin.AdminSite):
     """
-    Custom admin site with Publishing House branding
+    Custom admin site with A-D Kay Publications branding
     and a stats dashboard on the index page.
     """
     site_header = format_html(
         '<span style="font-family:Georgia,serif;letter-spacing:2px;">'
-        '📚 PUBLISHING HOUSE</span>'
+        '📚 A-D KAY PUBLICATIONS</span>'
     )
-    site_title = 'Publishing House CMS'
+    site_title = 'A-D Kay Publications CMS'
     index_title = 'Content Management Dashboard'
 
     def index(self, request, extra_context=None):
