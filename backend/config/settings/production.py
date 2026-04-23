@@ -79,6 +79,8 @@ LOGGING = {
 # ----------------────────────────────────────────────────
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@adkaypublications.com')
+
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

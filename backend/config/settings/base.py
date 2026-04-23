@@ -237,6 +237,13 @@ MEDIA_ROOT = '/var/www/adkay/media/'
 # ─────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# ─────────────────────────────────────────
+# EMAIL 
+# ────────────────────────────────────────
+
+ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@adkaypublications.com')
+
 # ─────────────────────────────────────────
 # CELERY
 # ─────────────────────────────────────────

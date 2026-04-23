@@ -82,7 +82,7 @@ def send_contact_notification(self, message_id):
             subject=subject,
             body=strip_tags(html_body),  # fallback plain text
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[settings.ADMIN_EMAIL],
+            to=[getattr(settings, "ADMIN_EMAIL", "admin@adkaypublications.com")],
             reply_to=[msg.email],
         )
 

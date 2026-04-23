@@ -96,7 +96,7 @@ def send_welcome_email(self, subscriber_id):
             body=strip_tags(html_body),  # fallback plain text
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[sub.email],
-            reply_to=[settings.ADMIN_EMAIL],
+            reply_to=[getattr(settings, "ADMIN_EMAIL", settings.DEFAULT_FROM_EMAIL)],
         )
 
         email.attach_alternative(html_body, "text/html")
