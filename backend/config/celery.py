@@ -1,10 +1,13 @@
 """
-Celery configuration for Publishing House.
+Celery configuration for A-D Kay Publications.
 """
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.development')
+os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv(
+    'DJANGO_SETTINGS_MODULE',
+    'config.settings.production'
+)
 
 app = Celery('adkaypublications')
 
