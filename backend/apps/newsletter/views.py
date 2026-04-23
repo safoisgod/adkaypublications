@@ -24,7 +24,6 @@ class SubscribeView(APIView):
     """
     POST /api/v1/newsletter/subscribe/
     Subscribe an email to the newsletter.
-    Idempotent — re-subscribing a lapsed subscriber reactivates them.
     """
     permission_classes = [AllowAny]
     throttle_classes = [NewsletterRateThrottle]
@@ -32,25 +31,44 @@ class SubscribeView(APIView):
     def post(self, request):
         serializer = SubscribeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         subscriber, created = serializer.save()
 
         if created:
-            try:
-                send_welcome_email.delay(subscriber.pk)
-            except Exception as e:
-                logger.warning(f"Celery unavailable, welcome email skipped: {e}")
+            logger.info(f"New subscriber created: {subscriber.email}")
 
-            logger.info(f"New newsletter subscriber: {subscriber.email}")
+            # ─────────────────────────────────────────
+            # CELERY TASK TRIGGER (SAFE VERSION)
+            # ─────────────────────────────────────────
+            try:
+                result = send_welcome_email.delay(subscriber.pk)
+
+                # optional debug (VERY useful)
+                logger.info(
+                    f"Celery task queued: task_id={result.id} for {subscriber.email}"
+                )
+
+            except Exception as e:
+                # DO NOT silently hide this in production
+                logger.error(
+                    f"FAILED to queue welcome email task for {subscriber.email}: {e}"
+                )
+                return Response(
+                    {
+                        "message": "Subscribed, but email system failed to trigger."
+                    },
+                    status=status.HTTP_201_CREATED,
+                )
+
             return Response(
                 {'message': 'You have successfully subscribed to our newsletter.'},
                 status=status.HTTP_201_CREATED,
             )
-        else:
-            return Response(
-                {'message': 'You are already subscribed to our newsletter.'},
-                status=status.HTTP_200_OK,
-            )
 
+        return Response(
+            {'message': 'You are already subscribed to our newsletter.'},
+            status=status.HTTP_200_OK,
+        )
 
 class UnsubscribeView(APIView):
     """
