@@ -17,7 +17,7 @@ warn()   { echo -e "${YELLOW}⚠ $1${NC}"; }
 error()  { echo -e "${RED}✗ $1${NC}"; exit 1; }
 section(){ echo -e "\n${YELLOW}── $1 ──────────────────────${NC}"; }
 
-section "Publishing House — Setup"
+section "A-D Kay Publication — Setup"
 
 # ── Python check ───────────────────────────────────────────────────────────
 python3 --version >/dev/null 2>&1 || error "Python 3.10+ is required."
