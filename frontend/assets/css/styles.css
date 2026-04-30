@@ -1382,17 +1382,18 @@ footer {
 
 .newsletter-form {
   display: flex;
-  gap: 6px;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .newsletter-form input {
-  flex: 1;
-  padding: 8px 10px;
+  width: 100%;
+  padding: 10px 12px;
   font-size: 0.75rem;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.2);
   color: var(--white);
-  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* make email slightly more important visually */
@@ -1404,9 +1405,11 @@ footer {
   color: rgba(255,255,255,0.4);
 }
 
+
 .newsletter-form button {
-  padding: 8px 10px;
-  font-size: 0.7rem;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   background: var(--white);
   color: var(--blue-deep);
