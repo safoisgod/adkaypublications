@@ -4,7 +4,15 @@ Admin configuration for the Blog app.
 from django.contrib import admin
 from django.utils.html import format_html
 from apps.core.admin import PublishableAdmin
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, PostContent
+
+
+# ✅ NEW: Inline for PostContent
+class PostContentInline(admin.StackedInline):  # can switch to TabularInline later
+    model = PostContent
+    extra = 1
+    ordering = ['order']
+    fields = ('content_type', 'text', 'image', 'video_url', 'order')
 
 
 @admin.register(Category)
@@ -41,6 +49,8 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(PublishableAdmin):
+    inlines = [PostContentInline]  # ✅ ADD THIS
+
     list_display = [
         'cover_preview', 'title', 'author',
         'category', 'reading_time', 'views',
@@ -56,7 +66,7 @@ class PostAdmin(PublishableAdmin):
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = [
         'cover_preview', 'reading_time', 'views',
-        'created_at', 'updated_at', 'published_at',
+        'created_at', 'updated_at',
     ]
     filter_horizontal = ['tags']
     date_hierarchy = 'published_at'
@@ -69,8 +79,9 @@ class PostAdmin(PublishableAdmin):
         ('Cover Image', {
             'fields': ('cover_image', 'cover_preview'),
         }),
-        ('Post Body', {
+        ('Post Body (Legacy)', {  # ✅ renamed for clarity
             'fields': ('excerpt', 'body'),
+            'classes': ('collapse',),  # optional: hide it
         }),
         ('Visibility & Flags', {
             'fields': ('is_published', 'is_featured', 'allow_comments'),

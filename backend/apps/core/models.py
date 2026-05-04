@@ -30,7 +30,11 @@ class PublishableModel(TimeStampedModel):
 
     def publish(self):
         self.is_published = True
-        self.published_at = timezone.now()
+
+        # ✅ Only set if NOT manually provided
+        if not self.published_at:
+            self.published_at = timezone.now()
+
         self.save(update_fields=['is_published', 'published_at', 'updated_at'])
 
     def unpublish(self):

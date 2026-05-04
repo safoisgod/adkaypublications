@@ -34,7 +34,7 @@ const API = {
     const response = await fetch(url, defaults);
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.log('API Error full response:', JSON.stringify(errorData, null, 2)); // ADD THIS
+      console.log('API Error full response:', JSON.stringify(errorData, null, 2));
       const unwrapped = errorData.data || errorData;
       const msg = unwrapped.detail
         || Object.entries(unwrapped)
@@ -112,6 +112,15 @@ const Skeleton = {
       <div class="skeleton skeleton-line"></div>
       <div class="skeleton skeleton-line w-40"></div>
     </div>`).join(''),
+  blogBody: () => `
+    <div style="max-width:720px">
+      <div class="skeleton skeleton-line" style="height:18px;margin-bottom:1rem"></div>
+      <div class="skeleton skeleton-line" style="height:18px;margin-bottom:1rem;width:90%"></div>
+      <div class="skeleton skeleton-line" style="height:18px;margin-bottom:1rem;width:75%"></div>
+      <div class="skeleton" style="height:320px;border-radius:4px;margin:2rem 0"></div>
+      <div class="skeleton skeleton-line" style="height:18px;margin-bottom:1rem"></div>
+      <div class="skeleton skeleton-line" style="height:18px;margin-bottom:1rem;width:85%"></div>
+    </div>`,
 };
 
 const emptyState = (title = 'Nothing here yet', msg = '') => `
@@ -122,7 +131,107 @@ const emptyState = (title = 'Nothing here yet', msg = '') => `
   </div>`;
 
 /* ─────────────────────────────────────────────────────────────
-   5. RENDER FUNCTIONS — use P1 class names so existing CSS applies
+   5. POST CONTENT BLOCK RENDERER
+   Handles PostContent blocks: text | image | video
+   Blocks must be pre-sorted by `order` from the API.
+   Falls back gracefully to post.body if no blocks exist.
+   ───────────────────────────────────────────────────────────── */
+
+/**
+ * Renders a single PostContent block into an HTML string.
+ * @param {Object} block - A PostContent block from the API
+ * @param {string} block.content_type - 'text' | 'image' | 'video'
+ * @param {string} [block.text]      - HTML string for text blocks
+ * @param {string} [block.image]     - Image URL for image blocks
+ * @param {string} [block.image_url] - Alternative image URL field
+ * @param {string} [block.video_url] - Embed URL for video blocks
+ * @param {number} block.order       - Sort order (used upstream)
+ * @returns {string} HTML string
+ */
+function renderContentBlock(block) {
+  switch (block.content_type) {
+
+    case 'text':
+      if (!block.text) return '';
+      return `<div class="bdd-block bdd-block--text prose-content">${block.text}</div>`;
+
+    case 'image': {
+      const src = block.image_url || block.image || '';
+      if (!src) return '';
+      const imgSrc = src.startsWith('http') ? src : CONFIG.API_BASE + src;
+      const alt    = block.caption || block.alt || 'Article image';
+      return `
+        <figure class="bdd-block bdd-block--image">
+          <img
+            src="${imgSrc}"
+            alt="${alt}"
+            loading="lazy"
+            style="width:100%;border-radius:4px;display:block"
+          >
+          ${block.caption ? `<figcaption class="bdd-block-caption">${block.caption}</figcaption>` : ''}
+        </figure>`;
+    }
+
+    case 'video': {
+      if (!block.video_url) return '';
+      // Normalise YouTube watch URLs → embed URLs
+      const embedUrl = block.video_url
+        .replace('watch?v=', 'embed/')
+        .replace('youtu.be/', 'www.youtube.com/embed/');
+      return `
+        <div class="bdd-block bdd-block--video">
+          <div class="bdd-video-wrapper" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:4px">
+            <iframe
+              src="${embedUrl}"
+              title="${block.caption || 'Embedded video'}"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              style="position:absolute;top:0;left:0;width:100%;height:100%"
+            ></iframe>
+          </div>
+          ${block.caption ? `<p class="bdd-block-caption">${block.caption}</p>` : ''}
+        </div>`;
+    }
+
+    default:
+      // Unknown block type — render nothing, don't crash
+      console.warn('[PostContent] Unknown block type:', block.content_type);
+      return '';
+  }
+}
+
+/**
+ * Renders an ordered array of PostContent blocks.
+ * Blocks should already arrive sorted by `order` from the API,
+ * but we sort client-side too as a safety net.
+ *
+ * Falls back to rendering `legacyBody` (post.body HTML) if
+ * the blocks array is empty or missing — preserving backward
+ * compatibility with any posts that haven't been migrated yet.
+ *
+ * @param {Array}  blocks     - post.contents[] from the API
+ * @param {string} legacyBody - post.body fallback HTML string
+ * @returns {string} Combined HTML string of all rendered blocks
+ */
+function renderPostContents(blocks, legacyBody = '') {
+  // ── Backward compat: fall back to old post.body ──
+  if (!Array.isArray(blocks) || blocks.length === 0) {
+    if (legacyBody) {
+      return `<div class="bdd-block bdd-block--text prose-content">${legacyBody}</div>`;
+    }
+    return `<p class="bdd-no-content" style="color:var(--mid-grey);font-style:italic">No content available.</p>`;
+  }
+
+  // Sort by order field (ascending) as a client-side safety net
+  const sorted = [...blocks].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  return sorted.map(renderContentBlock).join('\n');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. RENDER FUNCTIONS — use P1 class names so existing CSS applies
    ───────────────────────────────────────────────────────────── */
 
 function renderBookCard(book, linkToDetail = true) {
@@ -296,24 +405,12 @@ function renderTeamCard(author) {
 
 function renderSearchResult(item) {
   const imgSrc = API.imgUrl(item.image || item.cover);
-
-  const type = item.type || 'result';
-
-  const title =
-    item.title ||
-    item.name ||
-    item.full_name ||
-    'Untitled';
-
+  const type   = item.type || 'result';
+  const title  = item.title || item.name || item.full_name || 'Untitled';
   const detail =
-    type === 'book'
-      ? `book-detail.html?slug=${item.slug || item.id}`
-      : type === 'post'
-      ? `blog-detail.html?slug=${item.slug || item.id}`
-      : type === 'author'
-      ? `team.html` // or custom author page
-      : '#';
-
+    type === 'book'   ? `book-detail.html?slug=${item.slug || item.id}` :
+    type === 'post'   ? `blog-detail.html?slug=${item.slug || item.id}` :
+    type === 'author' ? `team.html` : '#';
   return `
     <div class="search-result-item" onclick="window.location='${detail}'" style="cursor:pointer">
       <div class="search-result-thumb">
@@ -327,7 +424,7 @@ function renderSearchResult(item) {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   6. AUTHOR PANEL (slide-in drawer with GSAP)
+   7. AUTHOR PANEL (slide-in drawer with GSAP)
    ───────────────────────────────────────────────────────────── */
 const AuthorPanel = {
   isOpen: false,
@@ -353,7 +450,7 @@ const AuthorPanel = {
       </div>`;
     document.body.appendChild(panel);
     document.getElementById('author-panel-backdrop').addEventListener('click', () => this.close());
-    document.getElementById('author-panel-close').addEventListener('click', () => this.close());
+    document.getElementById('author-panel-close').addEventListener('click',   () => this.close());
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && this.isOpen) this.close(); });
   },
 
@@ -482,7 +579,7 @@ const AuthorPanel = {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   7. PAGE MODULES
+   8. PAGE MODULES
    ───────────────────────────────────────────────────────────── */
 
 /* Home */
@@ -754,17 +851,13 @@ const BlogPage = {
       const featured = this.allPosts.find(p => p.is_featured) || this.allPosts[0];
       if (featuredEl && featured) {
         featuredEl.innerHTML = renderFeaturedPost(featured);
-
-        // ── FIX: animate the featured post directly since ScrollTrigger
-        //         already ran before this element existed in the DOM ──
-        const featuredEl2 = featuredEl.querySelector('.blog-featured');
-        if (featuredEl2) {
-          featuredEl2.style.opacity = '1';
-          featuredEl2.style.transform = 'none';
-          gsap.from(featuredEl2, { opacity: 0, y: 30, duration: 0.85, ease: 'power3.out' });
+        const featuredCard = featuredEl.querySelector('.blog-featured');
+        if (featuredCard) {
+          featuredCard.style.opacity = '1';
+          featuredCard.style.transform = 'none';
+          gsap.from(featuredCard, { opacity: 0, y: 30, duration: 0.85, ease: 'power3.out' });
         }
       }
-
       const filterEl = document.getElementById('blog-filter-bar');
       if (filterEl) this.renderFilters(filterEl);
       this.render(featured?.slug);
@@ -802,37 +895,54 @@ const BlogPage = {
   },
 };
 
-/* Blog Detail */
+/* ─────────────────────────────────────────────────────────────
+   BLOG DETAIL PAGE
+   Now renders post.contents[] (PostContent blocks) instead of
+   the legacy post.body field. Falls back to post.body for any
+   post that has not yet been migrated to the block system.
+   ───────────────────────────────────────────────────────────── */
 const BlogDetailPage = {
   async init() {
     const slug = getParam('slug') || getParam('id');
     if (!slug) { this.showError('No post specified.'); return; }
+
     const main = document.getElementById('blog-detail-main');
     if (main) main.innerHTML = `
       <div class="container" style="padding-top:8rem">
         <div class="skeleton" style="aspect-ratio:21/9;margin-bottom:3rem;border-radius:4px"></div>
         <div class="skeleton skeleton-line" style="height:50px;margin-bottom:1rem;max-width:800px;margin-left:auto;margin-right:auto"></div>
         <div class="skeleton skeleton-line w-40" style="max-width:800px;margin:0 auto 2rem"></div>
+        ${Skeleton.blogBody()}
       </div>`;
+
     try {
       const data = await API.getPost(slug);
       const post = data.data || data;
       this.render(post);
+      // Fire-and-forget view count increment
       API.fetch(`/api/blog/posts/${slug}/view/`, { method: 'POST' }).catch(() => {});
       this.loadRelated(post);
     } catch (err) { this.showError(err.message); }
   },
+
   render(post) {
-    const main     = document.getElementById('blog-detail-main');
+    const main = document.getElementById('blog-detail-main');
     if (!main) return;
-    const imgSrc   = API.imgUrl(post.cover_url || post.image || post.cover);
-    const author   = resolveAuthor(post);
-    const initial  = author.charAt(0).toUpperCase();
-    const catName  = post.category?.name || (typeof post.category === 'string' ? post.category : '') || '';
-    const date     = formatDate(post.published_at || post.date || post.created_at);
-    const tags     = Array.isArray(post.tags) ? post.tags : [];
+
+    const imgSrc  = API.imgUrl(post.cover_url || post.image || post.cover);
+    const author  = resolveAuthor(post);
+    const initial = author.charAt(0).toUpperCase();
+    const catName = post.category?.name || (typeof post.category === 'string' ? post.category : '') || '';
+    const date    = formatDate(post.published_at || post.date || post.created_at);
+    const tags    = Array.isArray(post.tags) ? post.tags : [];
     const hasImage = !!(post.cover_url || post.image || post.cover);
-    const body     = post.body || post.content || post.description || '';
+
+    // ── PostContent block rendering ──────────────────────────
+    // post.contents is the new structured block array.
+    // post.body is the legacy HTML field (backward compat).
+    const legacyBody = post.body || post.content || post.description || '';
+    const bodyHtml   = renderPostContents(post.contents, legacyBody);
+    // ────────────────────────────────────────────────────────
 
     main.innerHTML = `
       <div class="bdd-hero">
@@ -851,10 +961,14 @@ const BlogDetailPage = {
           </div>
         </div>
       </div>
+
       <div class="container bdd-layout">
         <article class="bdd-article">
           ${post.excerpt ? `<div class="bdd-excerpt"><p>${post.excerpt}</p></div>` : ''}
-          <div class="bdd-body prose-content" id="bdd-body">${body}</div>
+
+          <!-- PostContent blocks rendered here -->
+          <div class="bdd-body" id="bdd-body">${bodyHtml}</div>
+
           ${tags.length ? `
             <div class="bdd-tags">
               <span class="bdd-tags-label">Tagged:</span>
@@ -862,18 +976,26 @@ const BlogDetailPage = {
             </div>` : ''}
           <div class="bdd-back"><a href="blog.html" class="btn btn-outline">← Back to Journal</a></div>
         </article>
+
         <aside class="bdd-sidebar">
           <div class="bdd-sidebar-card">
             <div class="bdd-sidebar-label">About this article</div>
             <div class="bdd-sidebar-row"><span>Author</span><span>${author}</span></div>
-            ${date ? `<div class="bdd-sidebar-row"><span>Published</span><span>${date}</span></div>` : ''}
+            ${date     ? `<div class="bdd-sidebar-row"><span>Published</span><span>${date}</span></div>` : ''}
             ${post.reading_time ? `<div class="bdd-sidebar-row"><span>Read time</span><span>${post.reading_time} min</span></div>` : ''}
-            ${catName ? `<div class="bdd-sidebar-row"><span>Category</span><span>${catName}</span></div>` : ''}
+            ${catName  ? `<div class="bdd-sidebar-row"><span>Category</span><span>${catName}</span></div>` : ''}
           </div>
           <div class="bdd-related-posts" id="bdd-related">
             <div class="bdd-sidebar-label" style="margin-bottom:1rem">Related Posts</div>
             <div id="bdd-related-list">
-              ${[1,2].map(() => `<div style="display:flex;gap:0.75rem;margin-bottom:1rem"><div class="skeleton" style="width:60px;height:60px;border-radius:4px;flex-shrink:0"></div><div style="flex:1"><div class="skeleton skeleton-line" style="margin:0 0 6px"></div><div class="skeleton skeleton-line w-60" style="margin:0"></div></div></div>`).join('')}
+              ${[1,2].map(() => `
+                <div style="display:flex;gap:0.75rem;margin-bottom:1rem">
+                  <div class="skeleton" style="width:60px;height:60px;border-radius:4px;flex-shrink:0"></div>
+                  <div style="flex:1">
+                    <div class="skeleton skeleton-line" style="margin:0 0 6px"></div>
+                    <div class="skeleton skeleton-line w-60" style="margin:0"></div>
+                  </div>
+                </div>`).join('')}
             </div>
           </div>
         </aside>
@@ -881,7 +1003,35 @@ const BlogDetailPage = {
 
     document.title = `${post.title} — A-D Kay Publications`;
     this.animateIn();
+    this.animateBlocks();
   },
+
+  animateIn() {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.from('.bdd-title',    { y: 40, opacity: 0, duration: 0.9 }, 0.1)
+      .from('.bdd-subtitle', { y: 20, opacity: 0, duration: 0.7 }, 0.3)
+      .from('.bdd-meta',     { y: 15, opacity: 0, duration: 0.6 }, 0.45);
+  },
+
+  animateBlocks() {
+    // Stagger each content block in as the reader scrolls
+    const blocks = document.querySelectorAll('#bdd-body .bdd-block');
+    if (!blocks.length) {
+      // Fallback: animate the whole body container for legacy posts
+      gsap.from('#bdd-body', {
+        scrollTrigger: { trigger: '#bdd-body', start: 'top 85%', once: true },
+        y: 25, opacity: 0, duration: 0.7,
+      });
+      return;
+    }
+    blocks.forEach((block) => {
+      gsap.from(block, {
+        scrollTrigger: { trigger: block, start: 'top 88%', once: true },
+        y: 22, opacity: 0, duration: 0.65, ease: 'power2.out',
+      });
+    });
+  },
+
   async loadRelated(post) {
     const listEl = document.getElementById('bdd-related-list');
     if (!listEl) return;
@@ -910,13 +1060,7 @@ const BlogDetailPage = {
         { x: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out' });
     } catch { /* sidebar stays */ }
   },
-  animateIn() {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.from('.bdd-title',    { y: 40, opacity: 0, duration: 0.9 }, 0.1)
-      .from('.bdd-subtitle', { y: 20, opacity: 0, duration: 0.7 }, 0.3)
-      .from('.bdd-meta',     { y: 15, opacity: 0, duration: 0.6 }, 0.45);
-    gsap.from('#bdd-body', { scrollTrigger: { trigger: '#bdd-body', start: 'top 85%', once: true }, y: 25, opacity: 0, duration: 0.7 });
-  },
+
   showError(msg) {
     const main = document.getElementById('blog-detail-main');
     if (main) main.innerHTML = `<div class="container" style="padding-top:9rem">${emptyState('Post not found', msg)}</div>`;
@@ -1022,7 +1166,6 @@ const ContactPage = {
         success.style.display = 'block';
       }
     } catch (err) {
-      // Show the actual API error message if available
       const msg = err.message || 'Failed to send. Please try again.';
       if (error) { error.textContent = msg; error.style.display = 'block'; }
     } finally {
@@ -1076,47 +1219,33 @@ const Search = {
   },
   async query(q, resultsEl) {
     if (!resultsEl) return;
-
-    if (!q || q.trim().length < 2) {
-      resultsEl.innerHTML = '';
-      return;
-    }
-
+    if (!q || q.trim().length < 2) { resultsEl.innerHTML = ''; return; }
     resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">Searching…</p>`;
-
     try {
       const raw = await API.search(q.trim());
-      console.log("SEARCH RESPONSE:", raw);
-
+      console.log('SEARCH RESPONSE:', raw);
       let results = [];
-
       if (raw?.data) {
         results = [
-          ...(raw.data.books || []).map(b => ({ ...b, type: 'book' })),
-          ...(raw.data.posts || []).map(p => ({ ...p, type: 'post' })),
+          ...(raw.data.books   || []).map(b => ({ ...b, type: 'book'   })),
+          ...(raw.data.posts   || []).map(p => ({ ...p, type: 'post'   })),
           ...(raw.data.authors || []).map(a => ({ ...a, type: 'author' })),
         ];
       }
-
       if (!results.length) {
         resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">No results for "${q}"</p>`;
         return;
       }
-
-      resultsEl.innerHTML = results
-        .slice(0, 8)
-        .map(r => renderSearchResult(r))
-        .join('');
-
+      resultsEl.innerHTML = results.slice(0, 8).map(r => renderSearchResult(r)).join('');
     } catch (err) {
-      console.error("SEARCH ERROR:", err);
+      console.error('SEARCH ERROR:', err);
       resultsEl.innerHTML = `<p style="font-size:0.8rem;color:var(--mid-grey)">Search unavailable</p>`;
     }
   },
 };
 
 /* ─────────────────────────────────────────────────────────────
-   8. GSAP MODULE — P1 animations preserved + P2 helpers added
+   9. GSAP MODULE
    ───────────────────────────────────────────────────────────── */
 const GSAP = {
   animateCards(container) {
@@ -1196,7 +1325,7 @@ const GSAP = {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   9. ORIGINAL P1 FUNCTIONS
+   10. ORIGINAL P1 FUNCTIONS
    ───────────────────────────────────────────────────────────── */
 function initHeader() {
   const header = document.querySelector('header');
@@ -1285,7 +1414,7 @@ function initTimeline() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   10. BOOTSTRAP
+   11. BOOTSTRAP
    ───────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('page-overlay');
@@ -1305,19 +1434,19 @@ document.addEventListener('DOMContentLoaded', () => {
   Newsletter.init();
   Search.init();
 
-  if (onPage('index'))           { GSAP.heroEntrance(); HomePage.init(); }
-  if (onPage('books.html'))        BooksPage.init();
-  if (onPage('book-detail.html'))  BookDetailPage.init();
-  if (onPage('blog.html'))         BlogPage.init();
-  if (onPage('blog-detail.html'))  BlogDetailPage.init();
-  if (onPage('team.html'))         TeamPage.init();
-  if (onPage('services.html'))     ServicesPage.init();
+  if (onPage('index'))            { GSAP.heroEntrance(); HomePage.init(); }
+  if (onPage('books.html'))         BooksPage.init();
+  if (onPage('book-detail.html'))   BookDetailPage.init();
+  if (onPage('blog.html'))          BlogPage.init();
+  if (onPage('blog-detail.html'))   BlogDetailPage.init();
+  if (onPage('team.html'))          TeamPage.init();
+  if (onPage('services.html'))      ServicesPage.init();
   if (onPage('contact.html') || onPage('about.html')) ContactPage.init();
-  if (onPage('about.html'))        initTimeline();
+  if (onPage('about.html'))         initTimeline();
 });
 
 /* ─────────────────────────────────────────────────────────────
-   11. PUBLIC API (for inline onclick in rendered HTML)
+   12. PUBLIC API (for inline onclick in rendered HTML)
    ───────────────────────────────────────────────────────────── */
 window.BooksPage      = BooksPage;
 window.BookDetailPage = BookDetailPage;
