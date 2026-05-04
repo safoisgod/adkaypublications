@@ -79,10 +79,10 @@ class PostAdmin(PublishableAdmin):
         ('Cover Image', {
             'fields': ('cover_image', 'cover_preview'),
         }),
-        ('Post Body (Legacy)', {  # ✅ renamed for clarity
-            'fields': ('excerpt', 'body'),
-            'classes': ('collapse',),  # optional: hide it
-        }),
+        # ('Post Body (Legacy)', {  # ✅ renamed for clarity
+        #     'fields': ('excerpt', 'body'),
+        #     'classes': ('collapse',),  # optional: hide it
+        # }),
         ('Visibility & Flags', {
             'fields': ('is_published', 'is_featured', 'allow_comments'),
         }),

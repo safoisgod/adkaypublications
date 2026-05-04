@@ -98,9 +98,9 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
     )
 
     # ⚠️ KEEP THIS for now (backward compatibility)
-    body = models.TextField(
-        help_text='Full post content (HTML allowed).',
-    )
+    # body = models.TextField(
+    #     help_text='Full post content (HTML allowed).',
+    # )
 
     reading_time = models.PositiveIntegerField(
         default=1,
