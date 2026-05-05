@@ -1526,6 +1526,8 @@ footer {
 
 @media (max-width: 992px) {
   :root { --space-xl: 5rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
   .hero { grid-template-columns: 1fr; }
   .hero-visual { display: none; }
   .hero-content { padding: var(--space-xl) var(--space-md); }
@@ -1544,8 +1546,6 @@ footer {
 
 @media (max-width: 768px) {
   :root { --space-xl: 4rem; --space-lg: 2.5rem; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
   .mobile-nav { display: flex; }
   .section-header { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
   .books-grid { grid-template-columns: repeat(2, 1fr); }

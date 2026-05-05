@@ -158,8 +158,8 @@ function renderContentBlock(block) {
     case 'image': {
       const src = block.image_url || block.image || '';
       if (!src) return '';
-      const imgSrc = src.startsWith('http') ? src : CONFIG.API_BASE + src;
-      const alt    = block.caption || block.alt || 'Article image';
+      const imgSrc = API.imgUrl(src);
+      const alt = block.caption || block.alt || 'Article image';
       return `
         <figure class="bdd-block bdd-block--image">
           <img
