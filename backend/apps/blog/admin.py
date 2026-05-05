@@ -97,11 +97,19 @@ class PostAdmin(PublishableAdmin):
     )
 
     def cover_preview(self, obj):
+        url = None
+
         if obj.cover_image:
+            url = obj.cover_image.url
+        elif obj.cover_image_url:
+            url = obj.cover_image_url
+
+        if url:
             return format_html(
                 '<img src="{}" style="height:50px;width:80px;'
                 'object-fit:cover;border-radius:4px;" />',
-                obj.cover_image.url
+                url
             )
+
         return '—'
     cover_preview.short_description = 'Cover'
