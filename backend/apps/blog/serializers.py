@@ -72,11 +72,16 @@ class PostContentSerializer(serializers.ModelSerializer):
         ]
 
     def get_image_url(self, obj):
-        try:
-            if obj.image:
-                return obj.image.url
-        except Exception:
-            return None
+    # Cloudinary field can be truthy even when empty
+        if obj.image and str(obj.image):
+            try:
+                url = obj.image.url
+                if url:
+                    return url
+            except Exception:
+                pass
+        if obj.image_url:
+            return obj.image_url
         return None
 
 

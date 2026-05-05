@@ -75,6 +75,7 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
 
     cover_image = CloudinaryField('cover_image', null=True, blank=True)
+    cover_image_url = models.URLField(blank=True, null=True)
 
     excerpt = models.TextField(blank=True)
 
@@ -120,9 +121,19 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
 
         return slug
 
+
     @property
     def cover_url(self):
-        return self.cover_image.url if self.cover_image else None
+        if self.cover_image:
+            try:
+                url = self.cover_image.url
+                if url:
+                    return url
+            except Exception:
+                pass
+        if self.cover_image_url:
+            return self.cover_image_url
+        return None
 
     @property
     def author_name(self):
@@ -183,6 +194,7 @@ class PostContent(models.Model):
 
     text = models.TextField(blank=True)
     image = CloudinaryField('image', blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
     video_url = models.URLField(blank=True)
 
     order = models.PositiveIntegerField(default=0)

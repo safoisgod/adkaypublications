@@ -12,7 +12,7 @@ class PostContentInline(admin.StackedInline):  # can switch to TabularInline lat
     model = PostContent
     extra = 1
     ordering = ['order']
-    fields = ('content_type', 'text', 'image', 'video_url', 'order')
+    fields = ('content_type', 'text', 'image', 'image_url', 'video_url', 'order')
 
 
 @admin.register(Category)
@@ -77,7 +77,7 @@ class PostAdmin(PublishableAdmin):
             'fields': ('title', 'slug', 'subtitle', 'author', 'category', 'tags'),
         }),
         ('Cover Image', {
-            'fields': ('cover_image', 'cover_preview'),
+            'fields': ('cover_image', 'cover_image_url', 'cover_preview'),
         }),
         ('Excerpt', { 
             'fields': ('excerpt',),
