@@ -287,3 +287,6 @@ SPECTACULAR_SETTINGS = {
 # ─────────────────────────────────────────
 MAX_UPLOAD_SIZE = 20 * 1024 * 1024  # 20 MB
 ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
