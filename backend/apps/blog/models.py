@@ -6,26 +6,20 @@ from django.utils.text import slugify
 from django.utils import timezone
 
 from apps.core.models import TimeStampedModel, PublishableModel, SEOModel
-from apps.core.utils import blog_cover_path, calculate_reading_time
+from apps.core.utils import calculate_reading_time
 from cloudinary.models import CloudinaryField
 from apps.core.image_utils import CloudinaryImageMixin
 
 
 class Category(TimeStampedModel):
-    """Blog post category."""
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     description = models.TextField(blank=True)
-    color = models.CharField(
-        max_length=7, default='#2563EB',
-        help_text='Hex colour for UI badge (e.g. #2563EB).'
-    )
+    color = models.CharField(max_length=7, default='#2563EB')
     display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['display_order', 'name']
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
@@ -37,7 +31,6 @@ class Category(TimeStampedModel):
 
 
 class Tag(TimeStampedModel):
-    """Blog post tag."""
     name = models.CharField(max_length=80, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
 
@@ -54,17 +47,12 @@ class Tag(TimeStampedModel):
 
 
 class PublishedManager(models.Manager):
-    """Returns only published posts."""
     def get_queryset(self):
         return super().get_queryset().filter(is_published=True)
 
 
 class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
     CLOUDINARY_IMAGE_FIELDS = ['cover_image']
-
-    """
-    Blog post.
-    """
 
     title = models.CharField(max_length=300, db_index=True)
     slug = models.SlugField(max_length=320, unique=True, blank=True)
@@ -86,26 +74,14 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
 
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
 
-    cover_image = CloudinaryField(
-        'cover_image',
-        null=True,
-        blank=True,
-    )
+    cover_image = CloudinaryField('cover_image', null=True, blank=True)
 
-    excerpt = models.TextField(
-        blank=True,
-        help_text='Short summary shown on list/card views.',
-    )
-
-    # ⚠️ KEEP THIS for now (backward compatibility)
-    # body = models.TextField(
-    #     help_text='Full post content (HTML allowed).',
-    # )
+    excerpt = models.TextField(blank=True)
 
     reading_time = models.PositiveIntegerField(
         default=1,
-        help_text='Auto-calculated in minutes.',
         editable=False,
+        help_text='Auto-calculated in minutes.'
     )
 
     views = models.PositiveIntegerField(default=0, editable=False)
@@ -113,44 +89,23 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
     is_featured = models.BooleanField(default=False, db_index=True)
     allow_comments = models.BooleanField(default=True)
 
-    published_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="Set manually or auto-filled when publishing."
-    )
+    published_at = models.DateTimeField(null=True, blank=True)
 
-    # Managers
     objects = models.Manager()
     published = PublishedManager()
 
     class Meta:
-        ordering = [
-            models.F('published_at').desc(nulls_last=True),
-            '-created_at'
-        ]
-        verbose_name = 'Post'
-        verbose_name_plural = 'Posts'
+        ordering = ['-published_at', '-created_at']
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        # Slug generation
         if not self.slug:
             self.slug = self._generate_unique_slug()
 
-        # Auto-set published date
         if self.is_published and not self.published_at:
             self.published_at = timezone.now()
-
-        # Reading time calculation (still based on body for now)
-        if self.body:
-            import re
-            plain = re.sub(r'<[^>]+>', ' ', self.body)
-            self.reading_time = calculate_reading_time(plain)
-
-            from apps.core.utils import sanitize_html
-            self.body = sanitize_html(self.body)
 
         super().save(*args, **kwargs)
 
@@ -171,20 +126,43 @@ class Post(CloudinaryImageMixin, PublishableModel, SEOModel):
 
     @property
     def author_name(self):
-        if self.author:
-            return self.author.full_name
-        return 'Editorial Team'
+        return self.author.full_name if self.author else 'Editorial Team'
 
     def increment_views(self):
         Post.objects.filter(pk=self.pk).update(
             views=models.F('views') + 1
         )
 
+    # 🔥 CORE FIX: centralized reading time updater
+    def update_reading_time(self):
+        reading_time = self.calculate_reading_time_from_blocks()
+        Post.objects.filter(pk=self.pk).update(reading_time=reading_time)
 
-# Future enhancement: Flexible content blocks (text, image, video) for richer posts.
+    def calculate_reading_time_from_blocks(self):
+        import re
+
+        text_parts = []
+
+        for content in self.contents.all():
+            if content.content_type == 'text' and content.text:
+                text_parts.append(content.text)
+
+            # Optional weighting for non-text content
+            elif content.content_type == 'image':
+                text_parts.append('image')  # small weight
+
+            elif content.content_type == 'video':
+                text_parts.append('video')  # small weight
+
+        combined_text = " ".join(text_parts)
+
+        # Strip HTML
+        plain = re.sub(r'<[^>]+>', ' ', combined_text)
+
+        return calculate_reading_time(plain)
+
+
 class PostContent(models.Model):
-    """Flexible content blocks for a blog post."""
-
     TEXT = 'text'
     IMAGE = 'image'
     VIDEO = 'video'
@@ -201,10 +179,7 @@ class PostContent(models.Model):
         related_name='contents'
     )
 
-    content_type = models.CharField(
-        max_length=10,
-        choices=CONTENT_TYPES
-    )
+    content_type = models.CharField(max_length=10, choices=CONTENT_TYPES)
 
     text = models.TextField(blank=True)
     image = CloudinaryField('image', blank=True, null=True)
@@ -214,8 +189,19 @@ class PostContent(models.Model):
 
     class Meta:
         ordering = ['order']
-        verbose_name = 'Post Content'
-        verbose_name_plural = 'Post Contents'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # 🔥 Always update after save
+        self.post.update_reading_time()
+
+    def delete(self, *args, **kwargs):
+        post = self.post
+        super().delete(*args, **kwargs)
+
+        # 🔥 Always update after delete
+        post.update_reading_time()
 
     def __str__(self):
         return f"{self.post.title} - {self.content_type} ({self.order})"
