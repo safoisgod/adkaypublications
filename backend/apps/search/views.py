@@ -110,14 +110,14 @@ class SearchView(APIView):
                     Q(title__icontains=query) |
                     Q(subtitle__icontains=query) |
                     Q(excerpt__icontains=query) |
-                    Q(body__icontains=query) |
+                    Q(contents__text__icontains=query) |
                     Q(category__name__icontains=query) |
                     Q(tags__name__icontains=query) |
                     Q(author__first_name__icontains=query) |
                     Q(author__last_name__icontains=query)
                 )
                 .select_related('author', 'category')
-                .prefetch_related('tags')
+                .prefetch_related('tags', 'contents')  # optional but good
                 .distinct()[:limit]
             )
             post_data = PostListSerializer(post_qs, many=True, context={'request': request}).data
