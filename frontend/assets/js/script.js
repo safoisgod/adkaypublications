@@ -1435,13 +1435,13 @@ document.addEventListener('DOMContentLoaded', () => {
   Search.init();
 
   if (onPage('index'))            { GSAP.heroEntrance(); HomePage.init(); }
-  if (onPage('books.html'))         BooksPage.init();
-  if (onPage('book-detail.html'))   BookDetailPage.init();
-  if (onPage('blog.html'))          BlogPage.init();
-  if (onPage('blog-detail.html'))   BlogDetailPage.init();
-  if (onPage('team.html'))          TeamPage.init();
-  if (onPage('services.html'))      ServicesPage.init();
-  if (onPage('contact.html') || onPage('about.html')) ContactPage.init();
+  if (onPage('books'))         BooksPage.init();
+  if (onPage('book-detail'))   BookDetailPage.init();
+  if (onPage('blog'))          BlogPage.init();
+  if (onPage('blog-detail'))   BlogDetailPage.init();
+  if (onPage('team'))          TeamPage.init();
+  if (onPage('services'))      ServicesPage.init();
+  if (onPage('contact') || onPage('about')) ContactPage.init();
   if (onPage('about.html'))         initTimeline();
 });
 
