@@ -1442,7 +1442,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (onPage('team'))          TeamPage.init();
   if (onPage('services'))      ServicesPage.init();
   if (onPage('contact') || onPage('about')) ContactPage.init();
-  if (onPage('about.html'))         initTimeline();
+  if (onPage('about'))         initTimeline();
 });
 
 /* ─────────────────────────────────────────────────────────────

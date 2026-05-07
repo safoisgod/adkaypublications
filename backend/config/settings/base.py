@@ -228,7 +228,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/adkay/static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = []
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/adkay/media/'
