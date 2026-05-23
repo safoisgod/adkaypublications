@@ -238,7 +238,7 @@ function renderBookCard(book, linkToDetail = true) {
   const coverSrc = API.imgUrl(book.cover_url || book.image || book.cover);
   const author   = book.author_names || book.author || '';
   const genre    = book.genre?.name  || book.genre  || '';
-  const detail   = `book-detail.html?slug=${book.slug}`;
+  const detail   = `book-detail?slug=${book.slug}`;
   return `
     <div class="book-card" data-genre="${genre.toLowerCase()}"
          ${linkToDetail ? `style="cursor:pointer" onclick="window.location='${detail}'"` : ''}>
@@ -274,7 +274,7 @@ function renderBlogCard(post) {
   const catName = post.category?.name || (typeof post.category === 'string' ? post.category : '') || '';
   const date    = formatDate(post.published_at || post.date || post.created_at);
   return `
-    <div class="blog-card" style="cursor:pointer" onclick="window.location='blog-detail.html?slug=${post.slug}'">
+    <div class="blog-card" style="cursor:pointer" onclick="window.location='blog-detail?slug=${post.slug}'">
       <div class="blog-img">
         <img src="${imgSrc}" alt="${post.title}" loading="lazy">
       </div>
@@ -298,7 +298,7 @@ function renderFeaturedPost(post) {
   const date    = formatDate(post.published_at || post.date || post.created_at);
   return `
     <div class="blog-featured fade-up">
-      <a href="blog-detail.html?slug=${post.slug}">
+      <a href="blog-detail?slug=${post.slug}">
         <div class="blog-img">
           <img src="${imgSrc}" alt="${post.title}" loading="lazy">
         </div>
@@ -312,7 +312,7 @@ function renderFeaturedPost(post) {
           ${post.reading_time ? `<span>${post.reading_time} min read</span><span>·</span>` : ''}
           ${author ? `<span>By ${author}</span>` : ''}
         </div>
-        <a href="blog-detail.html?slug=${post.slug}" class="btn btn-outline">
+        <a href="blog-detail?slug=${post.slug}" class="btn btn-outline">
           Read Essay <span class="btn-icon">→</span>
         </a>
       </div>
@@ -408,8 +408,8 @@ function renderSearchResult(item) {
   const type   = item.type || 'result';
   const title  = item.title || item.name || item.full_name || 'Untitled';
   const detail =
-    type === 'book'   ? `book-detail.html?slug=${item.slug || item.id}` :
-    type === 'post'   ? `blog-detail.html?slug=${item.slug || item.id}` :
+    type === 'book'   ? `book-detail?slug=${item.slug || item.id}` :
+    type === 'post'   ? `blog-detail?slug=${item.slug || item.id}` :
     type === 'author' ? `team.html` : '#';
   return `
     <div class="search-result-item" onclick="window.location='${detail}'" style="cursor:pointer">
@@ -545,7 +545,7 @@ const AuthorPanel = {
         const genre = b.genre?.name || b.genre || '';
         return `
           <div class="apanel-book-card" style="cursor:pointer"
-               onclick="AuthorPanel.close(); setTimeout(()=>window.location='book-detail.html?slug=${b.slug}',380)">
+               onclick="AuthorPanel.close(); setTimeout(()=>window.location='book-detail?slug=${b.slug}',380)">
             <div class="apanel-book-cover">
               <img src="${cover}" alt="${b.title}" loading="lazy">
               <div class="apanel-book-hover">View →</div>
@@ -784,8 +784,8 @@ const BookDetailPage = {
               ${metaItems.map(m => `<div class="bd-meta-item"><span class="bd-meta-label">${m.label}</span><span class="bd-meta-val">${m.val}</span></div>`).join('')}
             </div>` : ''}
           <div class="bd-nav" id="bd-nav">
-            ${prev ? `<a href="book-detail.html?slug=${prev.slug}" class="bd-nav-btn"><span class="bd-nav-dir">← Previous</span><span class="bd-nav-title">${prev.title}</span></a>` : '<div></div>'}
-            ${next ? `<a href="book-detail.html?slug=${next.slug}" class="bd-nav-btn bd-nav-btn--next"><span class="bd-nav-dir">Next →</span><span class="bd-nav-title">${next.title}</span></a>` : '<div></div>'}
+            ${prev ? `<a href="book-detail?slug=${prev.slug}" class="bd-nav-btn"><span class="bd-nav-dir">← Previous</span><span class="bd-nav-title">${prev.title}</span></a>` : '<div></div>'}
+            ${next ? `<a href="book-detail?slug=${next.slug}" class="bd-nav-btn bd-nav-btn--next"><span class="bd-nav-dir">Next →</span><span class="bd-nav-title">${next.title}</span></a>` : '<div></div>'}
           </div>
         </div>
         <div class="bd-sidebar">
@@ -1048,7 +1048,7 @@ const BlogDetailPage = {
         const img = API.imgUrl(p.cover_url || p.image || p.cover);
         return `
           <div class="bdd-related-item" style="cursor:pointer"
-               onclick="window.location='blog-detail.html?slug=${p.slug}'">
+               onclick="window.location='blog-detail?slug=${p.slug}'">
             <div class="bdd-related-thumb"><img src="${img}" alt="${p.title}" loading="lazy"></div>
             <div class="bdd-related-info">
               <div class="bdd-related-title">${p.title}</div>
