@@ -77,10 +77,13 @@ const toArray = (data) => {
 const getParam   = (key) => new URLSearchParams(window.location.search).get(key);
 const formatDate = (iso) => iso ? new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) : '';
 const truncate   = (str = '', max = 160) => str.length > max ? str.slice(0, max).trimEnd() + '…' : str;
-const onPage     = (...pages) => pages.some(p =>
-  window.location.pathname.includes(p) ||
-  (p === 'index' && (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')))
-);
+const onPage = (...pages) => {
+  const path = window.location.pathname.replace(/^\/|\/$/g, '') || 'index';
+  return pages.some(p => {
+    if (p === 'index') return path === 'index' || path === '';
+    return path === p || path === p + '.html';
+  });
+};
 
 /* ─────────────────────────────────────────────────────────────
    4. SKELETON / EMPTY STATE
@@ -235,6 +238,7 @@ function renderPostContents(blocks, legacyBody = '') {
    ───────────────────────────────────────────────────────────── */
 
 function renderBookCard(book, linkToDetail = true) {
+  if (!book.slug) console.warn('[renderBookCard] Missing slug for book:', book.title);
   const coverSrc = API.imgUrl(book.cover_url || book.image || book.cover);
   const author   = book.author_names || book.author || '';
   const genre    = book.genre?.name  || book.genre  || '';
@@ -1373,11 +1377,16 @@ function initLinkTransitions() {
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      // ✅ Use the full resolved href (preserves ?slug=... query params)
+      const destination = link.href; // NOT link.getAttribute('href')
       gsap.set(overlay, { scaleY: 0, transformOrigin: 'bottom' });
-      gsap.to(overlay, { scaleY: 1, duration: 0.5, ease: 'power3.inOut',
-        onComplete: () => { window.location.href = href; } });
+      gsap.to(overlay, {
+        scaleY: 1, duration: 0.5, ease: 'power3.inOut',
+        onComplete: () => { window.location.href = destination; }
+      });
     });
   });
 }
