@@ -3,6 +3,7 @@ Root URL configuration for A-D Kay Publications.
 API is versioned under /api/
 """
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -12,6 +13,7 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 from apps.core.health import health_check
+from apps.sitemaps import sitemaps
 
 # ─────────────────────────────────────────
 # ADMIN CUSTOMIZATION
@@ -44,6 +46,9 @@ urlpatterns = [
 
     # Feeds (RSS)
     path('', include('apps.feeds.urls')),
+
+    # XML Sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
     # Health check
     path('health/', health_check, name='health-check'),

@@ -1,0 +1,16 @@
+# ─────────────────────────────────────────────────────────────
+# robots.txt — A-D Kay Publications
+# ─────────────────────────────────────────────────────────────
+# This file controls how search engine crawlers access the site.
+# For more information: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API paths (not user-facing content)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /health/
+
+# Sitemap location
+Sitemap: https://adkaypublications.com/sitemap.xml
