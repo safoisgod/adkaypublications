@@ -42,6 +42,9 @@ urlpatterns = [
     # API
     path('api/', include(api_patterns)),
 
+    # Feeds (RSS)
+    path('', include('apps.feeds.urls')),
+
     # Health check
     path('health/', health_check, name='health-check'),
 

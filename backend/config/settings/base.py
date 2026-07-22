@@ -30,6 +30,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.syndication',
 ]
 
 THIRD_PARTY_APPS = [
@@ -53,6 +54,7 @@ LOCAL_APPS = [
     'apps.contact',
     'apps.newsletter',
     'apps.search',
+    'apps.feeds',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
