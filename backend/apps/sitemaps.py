@@ -8,19 +8,52 @@ Sitemaps defined:
     - StaticViewSitemap  → Static frontend pages (home, about, blog list, books list, services, team)
     - BookSitemap        → Individual book detail pages
     - PostSitemap        → Individual blog post detail pages
-    - ServiceSitemap     → Individual service sections (anchored on services page)
 
-IMPORTANT: All location() methods return RELATIVE paths (e.g. '/books.html').
-Django's sitemap framework automatically prepends the protocol and domain
-from the request, so returning full absolute URLs would cause double URLs.
+REMOVED vs. the original file (see audit notes):
+    - AuthorSitemap  — every author resolved to the same '/team' URL, so this
+      generated N duplicate sitemap entries for one physical page. '/team'
+      is already covered once by StaticViewSitemap.
+    - ServiceSitemap — used a mismatched path ('service' singular, the real
+      page is '/services') and emitted '#svc-{slug}' fragment URLs. Google
+      strips URL fragments before indexing, so these fragment URLs collapse
+      to the same canonical page and would still count as duplicates even if
+      the path were corrected. '/services' is already covered once by
+      StaticViewSitemap.
+
+    If/when services or authors get real, unique detail pages (their own
+    path, not an anchor on a shared page), add a sitemap class back for them
+    at that point — pointing at the real path, not a fragment.
 """
 
+from urllib.parse import urlencode
+
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 
 from apps.books.models import Book
 from apps.blog.models import Post
-from apps.authors.models import Author
-from apps.services.models import Service
+
+
+# ─────────────────────────────────────────
+# HELPER: Build absolute frontend URL
+# ─────────────────────────────────────────
+def _frontend_url(path: str, query: dict | None = None) -> str:
+    """
+    Returns an absolute, canonical URL pointing to the frontend.
+
+    Uses FRONTEND_URL from settings (must be the canonical
+    'https://adkaypublications.com' — no trailing slash, no www, no scheme
+    other than https). Ensures no double slashes, normalizes the path, and
+    safely URL-encodes any query parameters instead of interpolating them
+    directly into the string.
+    """
+    base = getattr(settings, 'FRONTEND_URL', 'https://adkaypublications.com')
+    base = base.rstrip('/')
+    path = f"/{path.lstrip('/')}" if path else "/"
+    url = f"{base}{path}"
+    if query:
+        url = f"{url}?{urlencode(query)}"
+    return url
 
 
 # ─────────────────────────────────────────
@@ -29,43 +62,32 @@ from apps.services.models import Service
 class StaticViewSitemap(Sitemap):
     """
     Sitemap for static, non-database-driven frontend pages.
-
-    These pages are served directly by nginx as static HTML files.
     """
-    priority = 0.8
     changefreq = 'monthly'
 
     # Each entry: (path, priority, changefreq)
     pages = [
-        ('',                       1.0, 'weekly'),       # Homepage
-        ('about.html',             0.8, 'monthly'),       # About page
-        ('blog.html',              0.7, 'weekly'),        # Blog listing
-        ('books.html',             0.7, 'weekly'),        # Books listing
-        ('services.html',          0.8, 'monthly'),       # Services listing
-        ('team.html',              0.6, 'monthly'),       # Team listing
+        ('',          1.0, 'weekly'),   # Homepage — must resolve to '/', not '/index'
+        ('about',     0.8, 'monthly'),
+        ('blog',      0.7, 'weekly'),
+        ('books',     0.7, 'weekly'),
+        ('services',  0.8, 'monthly'),
+        ('team',      0.6, 'monthly'),
     ]
 
     def items(self):
-        """Returns list of page tuples (path, priority, changefreq)."""
         return self.pages
 
     def location(self, item):
-        """Returns the relative path for the given page."""
-        return f"/{item[0]}"
+        return _frontend_url(item[0])
 
     def priority(self, item):
-        """Returns the priority for the given page."""
         return item[1]
 
     def changefreq(self, item):
-        """Returns the change frequency for the given page."""
         return item[2]
 
     def lastmod(self, item):
-        """
-        Static pages don't have a dynamic lastmod.
-        Returns None to omit the <lastmod> element.
-        """
         return None
 
 
@@ -82,10 +104,6 @@ class BookSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        """
-        Returns all published books.
-        Uses .only() to defer unused fields for optimal performance.
-        """
         return (
             Book.objects
             .filter(is_published=True)
@@ -93,11 +111,9 @@ class BookSitemap(Sitemap):
         )
 
     def location(self, item):
-        """Generates relative path: /book-detail?slug={slug}"""
-        return f"/book-detail?slug={item.slug}"
+        return _frontend_url('book-detail', {'slug': item.slug})
 
     def lastmod(self, item):
-        """Uses updated_at as the last modification date."""
         return item.updated_at
 
 
@@ -114,9 +130,6 @@ class PostSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        """
-        Returns all published blog posts.
-        """
         return (
             Post.objects
             .filter(is_published=True)
@@ -124,85 +137,9 @@ class PostSitemap(Sitemap):
         )
 
     def location(self, item):
-        """Generates relative path: /blog-detail?slug={slug}"""
-        return f"/blog-detail?slug={item.slug}"
+        return _frontend_url('blog-detail', {'slug': item.slug})
 
     def lastmod(self, item):
-        """Uses updated_at as the last modification date."""
-        return item.updated_at
-
-
-# ─────────────────────────────────────────
-# 4. AUTHORS (Team Members)
-# ─────────────────────────────────────────
-class AuthorSitemap(Sitemap):
-    """
-    Sitemap for active authors/team members.
-
-    Authors do not have individual detail pages; they link to the team listing.
-    Priority is lower than static pages since they share a single page.
-    """
-    priority = 0.4
-    changefreq = 'monthly'
-
-    def items(self):
-        """
-        Returns all active authors.
-        """
-        return (
-            Author.objects
-            .filter(is_active=True)
-            .only('slug', 'updated_at', 'full_name')
-        )
-
-    def location(self, item):
-        """
-        All authors link to the team page.
-        Since there's no individual author detail page, they all point
-        to the team listing.
-        """
-        return '/team.html'
-
-    def lastmod(self, item):
-        """Uses updated_at as the last modification date."""
-        return item.updated_at
-
-
-# ─────────────────────────────────────────
-# 5. SERVICES
-# ─────────────────────────────────────────
-class ServiceSitemap(Sitemap):
-    """
-    Sitemap for active services.
-
-    Each service is a section on the services.html page, identified by
-    an anchor ID like #svc-{slug}.
-
-    Google recommends using hash URLs for single-page sections.
-    """
-    priority = 0.5
-    changefreq = 'monthly'
-
-    def items(self):
-        """
-        Returns all active services.
-        """
-        return (
-            Service.objects
-            .filter(is_active=True)
-            .only('slug', 'updated_at', 'title')
-        )
-
-    def location(self, item):
-        """
-        Generates relative path: /services.html#svc-{slug}
-
-        HTML anchors are valid in sitemaps and are indexed by Google.
-        """
-        return f"/services.html#svc-{item.slug}"
-
-    def lastmod(self, item):
-        """Uses updated_at as the last modification date."""
         return item.updated_at
 
 
@@ -210,9 +147,7 @@ class ServiceSitemap(Sitemap):
 # SITEMAP INDEX DICTIONARY
 # ─────────────────────────────────────────
 sitemaps = {
-    'static':     StaticViewSitemap,
-    'books':      BookSitemap,
-    'posts':      PostSitemap,
-    'authors':    AuthorSitemap,
-    'services':   ServiceSitemap,
+    'static': StaticViewSitemap,
+    'books':  BookSitemap,
+    'posts':  PostSitemap,
 }
