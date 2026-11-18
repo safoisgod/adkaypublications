@@ -35,21 +35,41 @@ from apps.blog.models import Post
 
 
 # ─────────────────────────────────────────
-# HELPER: Build absolute frontend URL
+# CANONICAL SITEMAP BASE
+# ─────────────────────────────────────────
+class CanonicalSitemap(Sitemap):
+    """
+    Sitemap base that always emits the canonical frontend origin
+    (https://adkaypublications.com) in front of every location.
+
+    Django's Sitemap._urls() prepends '{protocol}://{domain}' to every
+    location() result UNCONDITIONALLY, so location() must return a
+    RELATIVE path. protocol/domain are derived from frontend_base() here
+    so the generated URLs always use exactly one canonical origin.
+    """
+
+    def get_protocol(self, protocol=None):
+        base = frontend_base()
+        return base.split("://", 1)[0] or "https"
+
+    def get_domain(self, site=None):
+        base = frontend_base()
+        if "://" in base:
+            return base.split("://", 1)[1]
+        return "adkaypublications.com"
+
+
+# ─────────────────────────────────────────
+# HELPER: Build relative frontend path
 # ─────────────────────────────────────────
 def _frontend_url(path: str, query: dict | None = None) -> str:
     """
-    Returns an absolute, canonical URL pointing to the frontend.
-
-    Uses frontend_base() (derived from settings.FRONTEND_URL) — the
-    canonical 'https://adkaypublications.com' (no trailing slash, no www,
-    no scheme other than https). Ensures no double slashes, normalizes the
-    path, and safely URL-encodes any query parameters instead of
-    interpolating them directly into the string.
+    Returns a RELATIVE canonical path for the frontend (e.g. '/about' or
+    '/book-detail?slug=x'). The absolute http(s)://host prefix is supplied
+    by CanonicalSitemap.get_protocol/get_domain — never returned here —
+    so Django cannot double-prefix an already-absolute URL.
     """
-    base = frontend_base()
-    path = f"/{path.lstrip('/')}" if path else "/"
-    url = f"{base}{path}"
+    url = f"/{path.lstrip('/')}" if path else "/"
     if query:
         url = f"{url}?{urlencode(query)}"
     return url
@@ -58,7 +78,7 @@ def _frontend_url(path: str, query: dict | None = None) -> str:
 # ─────────────────────────────────────────
 # 1. STATIC PAGES
 # ─────────────────────────────────────────
-class StaticViewSitemap(Sitemap):
+class StaticViewSitemap(CanonicalSitemap):
     """
     Sitemap for static, non-database-driven frontend pages.
     """
@@ -93,7 +113,7 @@ class StaticViewSitemap(Sitemap):
 # ─────────────────────────────────────────
 # 2. BOOKS
 # ─────────────────────────────────────────
-class BookSitemap(Sitemap):
+class BookSitemap(CanonicalSitemap):
     """
     Sitemap for published books.
 
@@ -119,7 +139,7 @@ class BookSitemap(Sitemap):
 # ─────────────────────────────────────────
 # 3. BLOG POSTS
 # ─────────────────────────────────────────
-class PostSitemap(Sitemap):
+class PostSitemap(CanonicalSitemap):
     """
     Sitemap for published blog posts.
 
