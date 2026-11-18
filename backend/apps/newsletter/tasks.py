@@ -7,6 +7,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.utils.html import strip_tags
 
+from apps.core.utils import frontend_base
+
 logger = logging.getLogger('apps.newsletter')
 
 
@@ -74,7 +76,7 @@ def send_welcome_email(self, subscriber_id):
 
             <p>
                 To manage or unsubscribe anytime, click below:<br>
-                <a href="{settings.FRONTEND_URL}/unsubscribe/?token={sub.unsubscribe_token}" 
+                <a href="{frontend_base()}/unsubscribe/?token={sub.unsubscribe_token}" 
                    style="color:#1e4fa1;">
                     Manage Subscription
                 </a>

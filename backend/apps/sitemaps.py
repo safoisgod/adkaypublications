@@ -27,7 +27,7 @@ REMOVED vs. the original file (see audit notes):
 
 from urllib.parse import urlencode
 
-from django.conf import settings
+from apps.core.utils import frontend_base
 from django.contrib.sitemaps import Sitemap
 
 from apps.books.models import Book
@@ -41,14 +41,13 @@ def _frontend_url(path: str, query: dict | None = None) -> str:
     """
     Returns an absolute, canonical URL pointing to the frontend.
 
-    Uses FRONTEND_URL from settings (must be the canonical
-    'https://adkaypublications.com' — no trailing slash, no www, no scheme
-    other than https). Ensures no double slashes, normalizes the path, and
-    safely URL-encodes any query parameters instead of interpolating them
-    directly into the string.
+    Uses frontend_base() (derived from settings.FRONTEND_URL) — the
+    canonical 'https://adkaypublications.com' (no trailing slash, no www,
+    no scheme other than https). Ensures no double slashes, normalizes the
+    path, and safely URL-encodes any query parameters instead of
+    interpolating them directly into the string.
     """
-    base = getattr(settings, 'FRONTEND_URL', 'https://adkaypublications.com')
-    base = base.rstrip('/')
+    base = frontend_base()
     path = f"/{path.lstrip('/')}" if path else "/"
     url = f"{base}{path}"
     if query:

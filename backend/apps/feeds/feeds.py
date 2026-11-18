@@ -20,6 +20,7 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from django.utils.html import escape
 
 from apps.blog.models import Post
+from apps.core.utils import frontend_base
 
 
 # ─────────────────────────────────────────
@@ -33,11 +34,7 @@ def _post_url(post):
         /blog-detail?slug={post.slug}
     """
 
-    frontend_url = getattr(
-        settings,
-        "FRONTEND_URL",
-        "http://localhost:5500"
-    ).rstrip("/")
+    frontend_url = frontend_base()
 
     return f"{frontend_url}/blog-detail?slug={post.slug}"
 
@@ -120,7 +117,7 @@ class LatestPostsFeed(Feed):
     title = f"{settings.SITE_NAME} | Journal"
 
     link = (
-        f"{settings.FRONTEND_URL.rstrip('/')}"
+        f"{frontend_base()}"
         "/blog"
     )
 
