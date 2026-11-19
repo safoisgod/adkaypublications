@@ -6,6 +6,11 @@
 
 User-agent: *
 Allow: /
+Allow: /api/books/
+Allow: /api/blog/posts/
+Allow: /api/authors/
+Allow: /api/services/
+
 
 # Disallow admin and API paths (not user-facing content)
 Disallow: /admin/
